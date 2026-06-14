@@ -1,0 +1,138 @@
+# =============================================================================
+# FastAPI / Python .gitignore
+# =============================================================================
+
+# ------------------------------------------------------------------------------
+# Environment Variables (CRITICAL for FastAPI)
+# ------------------------------------------------------------------------------
+.env
+.env.local
+.env.*.local
+.env.test
+.env.production
+# If you use a specific env file naming convention, add it here (e.g., .env.dev)
+
+# ------------------------------------------------------------------------------
+# Python Bytecode & Cache
+# ------------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ------------------------------------------------------------------------------
+# Virtual Environments
+# ------------------------------------------------------------------------------
+# If you use venv, virtualenv, or pyenv
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# If you use Poetry (keep poetry.lock, ignore the virtualenv)
+# .venv is usually inside the project root when using poetry config virtualenvs.in-project true
+
+# If you use Pipenv
+Pipfile.lock
+
+# If you use Conda
+envs/
+.conda/
+
+# ------------------------------------------------------------------------------
+# IDEs and Editors
+# ------------------------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+# ------------------------------------------------------------------------------
+# Testing and Coverage
+# ------------------------------------------------------------------------------
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# ------------------------------------------------------------------------------
+# FastAPI / Web Server Specifics
+# ------------------------------------------------------------------------------
+# Local development databases (adjust extensions based on your DB)
+*.db
+*.sqlite
+*.sqlite3
+data/
+# Celery (if you use it with FastAPI)
+celerybeat-schedule
+celerybeat.pid
+# Logs
+*.log
+logs/
+
+# ------------------------------------------------------------------------------
+# Linting, Formatting, and Type Checking
+# ------------------------------------------------------------------------------
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.ruff_cache/
+.flake8
+.pylintrc
+.pytest.ini
+
+# ------------------------------------------------------------------------------
+# Jupyter Notebooks (if used for prototyping)
+# ------------------------------------------------------------------------------
+.ipynb_checkpoints
+
+# ------------------------------------------------------------------------------
+# OS Generated Files
+# ------------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# ------------------------------------------------------------------------------
+# Docker (Optional: keep Dockerfiles, ignore local compose overrides or certs)
+# ------------------------------------------------------------------------------
+docker-compose.override.yml
+*.pem
+*.key
