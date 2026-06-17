@@ -23,8 +23,19 @@ Que: why we are not using SQLite in Fast api's ?
 ans: It doesn't have ORM, need to write complex sql queries, create messy code, 
 
 
+<h3> All about JWT </h3>
+- JSON web Token
+- Tokean has 3 parts {header, payload, signature}
+- need to install a library {pip install python-jose} 
+- jose: javascript object signature and encryption
+
+
 
 
 <h1>Some important things we should know</h1>
 - In this we have unicorn: it's basically a default server to run the application.
 
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc4MTYzMTY2N30.Fcj4bu2WrtP5DtDn-sU_cC9qp5JoeIy0dIWbQFlZFs8",
+  "token_type": "bearer"
+}
