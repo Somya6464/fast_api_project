@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException, status, Request
+from fastapi import FastAPI, Depends, HTTPException, status, Request, UploadFile, File, Header
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 import models, schemas, services
@@ -9,6 +9,8 @@ from jose import jwt, JWTError, ExpiredSignatureError
 from datetime import datetime, timedelta, timezone
 from pydantic import BaseModel
 from typing import List, Optional
+import os, shutil
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
@@ -154,3 +156,44 @@ async def get_books_jwt(
     user: dict = Depends(verify_token),
 ):
     return {"message": "Token is valid", "data": services.get_book(db)}
+
+
+# password hashing #
+# from passlib.context import CryptContext
+# pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+
+# File Upload #
+#step 1: ensure upload folder exists
+UPLOAD_DIR = "uploads"
+if not os.path.exists(UPLOAD_DIR):
+    os.makedirs(UPLOAD_DIR)
+
+# step 2: create endpoint for file upload
+app.mount("/files", StaticFiles(directory=UPLOAD_DIR), name="files")
+
+# step 3: create endpoint to handle file upload
+@app.post("/uploadfile/")
+def upload_file(file: UploadFile = File(...)):
+    fileName = file.filename
+    filePath = os.path.join(UPLOAD_DIR, fileName)
+
+    if not fileName:
+        raise HTTPException(status_code=400, detail="No file uploaded")
+    
+    with open(filePath, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+        return {"filename": fileName, "message": "File uploaded successfully",
+                "file_url": f"/files/{fileName}"} 
+    
+# step 4: Get file url api
+def get_file(file_name: str):
+    file_path = os.path.join(UPLOAD_DIR, file_name)
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail="File not found")
+    return {"file_url": f"/files/{file_name}"}
+
+@app.get("/files/{file_name}")
+def read_file(file_name: str):
+    return get_file(file_name)
