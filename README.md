@@ -30,6 +30,34 @@ ans: It doesn't have ORM, need to write complex sql queries, create messy code,
 - jose: javascript object signature and encryption
 
 
+<h3> CORS Handling </h3>
+- CORS: cross origin resource shearing
+- It usage when your frontend or backend runs on different ports (in web specially)
+- so it white list the frontend port so it was access the api's 
+
+<h3> Work with .env files </h3>
+- In large project we create config.py where we load env instance and then create a settings class like we created into our project
+- then declair all env values into this class 
+- Finally import this class whereever you want and use the values. shown in main.py, db.py
+
+<h3> Testing with PyTest </h3>
+- install : pip install pytest
+- create api's as usually you do
+- and then write the test cases into test file 
+- Finally type {pytest} in terminal to start test cases
+- if error comes then install: pip install httpx or httpx2
+- And run again or resolve error accordingly.
+
+<h3> 3rd Part Api integration </h3>
+- like using spotify api get the list of songs and then return those from our personal api's.
+- SO the 3rd party url was secure and user don't know the source at all.
+- 
+
+
+
+
+
+
 
 
 <h1>Some important things we should know</h1>

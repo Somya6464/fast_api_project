@@ -11,9 +11,13 @@ from pydantic import BaseModel
 from typing import List, Optional
 import os, shutil
 from fastapi.staticfiles import StaticFiles
+# from dotenv import load_dotenv
+from config import settings
 
 app = FastAPI()
 
+# load_dotenv()
+ 
 # Custom exception handler class
 class UserNotFoundException(HTTPException):
     def __init__(self, detail: str = "User not found"):
@@ -97,8 +101,8 @@ async def log_requests(request: Request, call_next):
 
 
 # jwt implementation #
-SECRET_KEY = "noSecretKey"
-ALGORITHM = "HS256"  # WE ALSO HAVE RS256, RS512, HS512, HS384, RS384, ES256, ES384, ES512
+SECRET_KEY = settings.origins
+ALGORITHM = settings.ALGORITHM  # WE ALSO HAVE RS256, RS512, HS512, HS384, RS384, ES256, ES384, ES512
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
@@ -197,3 +201,20 @@ def get_file(file_name: str):
 @app.get("/files/{file_name}")
 def read_file(file_name: str):
     return get_file(file_name)
+
+
+# Implementation of CORS #
+from fastapi.middleware.cors import CORSMiddleware
+
+origins = os.getenv("origins")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = origins,
+    allow_credentials = True,
+    allow_methods = ["*"], # allow for all methods and headers
+    allow_headers = ["*"]
+)
+""" After this we can access api's from this port of frontend, but in mobile apps we don't need to use this."""
+
+# Working with .env files, to maintain security #

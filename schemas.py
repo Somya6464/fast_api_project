@@ -13,6 +13,6 @@ class BookCreate(BookBase):
 class Book(BookBase):
     id: int
 
-    class Config:
+    class ConfigDict:
         from_attributes = True  # when pydamic version < 2.0
         # orm_mode = True # when pydantic version >= 2.0
