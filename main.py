@@ -217,4 +217,149 @@ app.add_middleware(
 )
 """ After this we can access api's from this port of frontend, but in mobile apps we don't need to use this."""
 
-# Working with .env files, to maintain security #
+# Working 3rd party Api's  #
+import requests
+
+
+@app.get("/posts_list")
+def get_posts_list():
+    url = "https://jsonplaceholder.typicode.com/posts"
+    response = requests.get(url)
+    return response.json()
+
+
+# Implementing web crawling #
+from bs4 import BeautifulSoup
+@app.get("/web_crawling")
+def web_crawling():
+    url = "https://indianexpress.com/"
+    
+    # FIX 1: Add a User-Agent header so the website doesn't block you
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
+    }
+    
+    response = requests.get(url, headers=headers)
+    
+    # Optional: Check if the request was successful before parsing
+    if response.status_code != 200:
+        print(f"Failed to get page. Status code: {response.status_code}")
+        return []
+
+    soup = BeautifulSoup(response.text, "html.parser")
+    data = []
+    for article in soup.find_all("a", class_="article-click topblockNews__sidebarLink"):
+        title = article.text.strip()
+        link = article.get("href") 
+        if link and not link.startswith("http"):
+            link = "https://indianexpress.com" + link
+            
+        data.append({"title": title, "link": link})
+        
+    return data 
+
+
+# Pagination #
+@app.get("/pagination")
+def pagination(page: int = 1, limit: int = 5):
+    url = "https://news.ycombinator.com/"
+    
+    # FIX 1: Add a User-Agent header so the website doesn't block you
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
+    }
+    
+    response = requests.get(url, headers=headers)
+    
+    # Optional: Check if the request was successful before parsing
+    if response.status_code != 200:
+        print(f"Failed to get page. Status code: {response.status_code}")
+        return []
+
+    soup = BeautifulSoup(response.text, "html.parser")
+    data = []
+    for item in soup.find_all("span", class_="titleline"):
+        title = item.text.strip()
+        link = item.get("href") 
+        if link and not link.startswith("http"):
+            link = "https://indianexpress.com" + link
+            
+        data.append({"title": title, "link": link})
+    # Implementing pagination logic
+    start = (page - 1) * limit
+    end = start + limit
+        
+    return {
+"page": page, "limit": limit,
+"total": len(data),
+ "data": data[start:end]
+    } 
+
+# Caching #
+import time
+
+# store cache data
+cache_data = []
+last_fetch = 0
+
+@app.get("/caching")
+def caching():
+    global cache_data, last_fetch
+    # Check if cache is valid (e.g., 60 seconds)
+
+    if last_fetch and (time.time() - last_fetch < 60) and cache_data:
+        return {"message": "Data fetched from cache", "data": cache_data}
+
+    url = "https://news.ycombinator.com/"
+    
+    # FIX 1: Add a User-Agent header so the website doesn't block you
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
+    }
+    
+    response = requests.get(url, headers=headers)
+    
+    # Optional: Check if the request was successful before parsing
+    if response.status_code != 200:
+        print(f"Failed to get page. Status code: {response.status_code}")
+        return []
+
+    soup = BeautifulSoup(response.text, "html.parser")
+    data = []
+    for item in soup.find_all("span", class_="titleline"):
+        title = item.text.strip()
+        link = item.get("href") 
+        if link and not link.startswith("http"):
+            link = "https://indianexpress.com" + link
+            
+        data.append({"title": title, "link": link})
+        
+    cache_data = data
+    last_fetch = time.time()
+    
+    # FIX 6: Return the same dictionary structure as the cache for consistency
+    return {"message": "Data fetched from web", "data": data}
+
+
+# Rate limiting #
+from slowapi import Limiter
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+
+
+# limiter setup
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+
+# Error handler
+@app.exception_handler(RateLimitExceeded)
+def rate_limit_handler(request: Request, exc: RateLimitExceeded):
+    return JSONResponse(
+        status_code=429,
+        content={"message": "Rate limit exceeded. Please try again later."},
+    )
+
+@app.get("/data_limit")
+@limiter.limit("5/minute")  # Limit to 5 requests per minute
+def data_limit(request: Request):
+    return {"message": "This is a rate-limited endpoint."}

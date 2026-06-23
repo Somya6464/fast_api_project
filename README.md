@@ -51,7 +51,32 @@ ans: It doesn't have ORM, need to write complex sql queries, create messy code,
 <h3> 3rd Part Api integration </h3>
 - like using spotify api get the list of songs and then return those from our personal api's.
 - SO the 3rd party url was secure and user don't know the source at all.
+- Install: pip install request
+
+<h3> web crawling use to extract some data from someones site or page to use it into on map </h3>
+- Install : pip install beautifulsoup4
+- Before using someones site data we need permission from the owner of the site, so we can't get copyRight issues.
+- and extract the widgets like flutter using the class of that HTML page
+
+<h3> Pagination </h3>
+- use the web crawling to get the data from a new site and perform pagination on that data.
+
+<h3> Caching </h3>
+- Use to speed up the processes, means once we get data we store it to use again so we don't need to call api for that again. 
+- Time-to-live (TTL)
+
+<h3> Rate Limiting </h3>
+- Prevent user or Attackers to making Too many requests to crash our servers.
+- So into this we set the api hit limit for user wise so a user may not hit an api above his rate limit.
+- Install: pip install slowapi
+
+
+<h3> Project Deployment </h3>
 - 
+
+
+
+
 
 
 
