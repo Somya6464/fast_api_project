@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException, status, Request, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 import models, schemas, services
-from db import get_db, engine
+from db import get_db, create_table
 from sqlalchemy.orm import Session
 import asyncio
 from jose import jwt, JWTError, ExpiredSignatureError
@@ -13,6 +13,9 @@ import os, shutil
 from fastapi.staticfiles import StaticFiles
 # from dotenv import load_dotenv
 from config import settings
+
+# Create tables
+create_table()
 
 app = FastAPI()
 
