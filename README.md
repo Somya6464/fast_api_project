@@ -71,7 +71,8 @@ ans: It doesn't have ORM, need to write complex sql queries, create messy code,
 - Install: pip install slowapi
 
 
-<h3> Project Deployment </h3>
+<h3> Project Deployment using RENDER </h3>
+- generate the requirements.txt file using {pip freeze > requirements.txt} command.
 - 
 
 
