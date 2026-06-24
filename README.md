@@ -73,7 +73,7 @@ ans: It doesn't have ORM, need to write complex sql queries, create messy code,
 
 <h3> Project Deployment using RENDER </h3>
 - generate the requirements.txt file using {pip freeze > requirements.txt} command.
-- 
+- LIVE LINK: https://fast-api-project-z7yg.onrender.com/docs
 
 
 
