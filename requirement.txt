@@ -6,3 +6,6 @@ pydantic
 python-jose
 ipython
 #pip install python-dotenv#
+redis
+fastapi-mail
+slowapi

@@ -1,8 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException, status, Request, UploadFile, File, Header
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-import models, schemas, services
-from db import get_db, create_table
+from core.db import get_db, create_table
 from sqlalchemy.orm import Session
 import asyncio
 from jose import jwt, JWTError, ExpiredSignatureError
@@ -12,7 +11,9 @@ from typing import List, Optional
 import os, shutil
 from fastapi.staticfiles import StaticFiles
 # from dotenv import load_dotenv
-from config import settings
+from core.config import settings
+from core.redis import redis_client
+import schemas.books_schema as books_schema, services.services as services
 
 # Create tables
 create_table()
@@ -34,12 +35,12 @@ async def user_not_found_exception_handler(request: Request, exc: UserNotFoundEx
         content={"message": exc.detail},
     )
 #async/await ka use aise hoga#
-@app.get("/books/get_books", response_model=list[schemas.Book])
+@app.get("/books/get_books", response_model=list[books_schema.Book])
 async def get_books(db: Session = Depends(get_db)):
     await asyncio.sleep(2)
     return services.get_book(db)
 
-@app.get("/books/get_books/{book_id}", response_model=schemas.Book)
+@app.get("/books/get_books/{book_id}", response_model=books_schema.Book)
 def get_book_by_id(book_id: int, db: Session = Depends(get_db)):
     db_book = services.get_book_by_id(db, book_id)
     if db_book is None:
@@ -47,18 +48,18 @@ def get_book_by_id(book_id: int, db: Session = Depends(get_db)):
     return db_book
 
 # here we use the custom status code
-@app.post("/books/create_book", response_model=schemas.Book, status_code=status.HTTP_201_CREATED) 
-def create_book(book: schemas.BookCreate, db: Session = Depends(get_db)):
+@app.post("/books/create_book", response_model=books_schema.Book, status_code=status.HTTP_201_CREATED) 
+def create_book(book: books_schema.BookCreate, db: Session = Depends(get_db)):
     return services.create_book(db, book)
 
-@app.put("/books/update_book/{book_id}", response_model=schemas.Book)
-def update_book(book_id: int, book: schemas.BookCreate, db: Session = Depends(get_db)):
+@app.put("/books/update_book/{book_id}", response_model=books_schema.Book)
+def update_book(book_id: int, book: books_schema.BookCreate, db: Session = Depends(get_db)):
     db_book = services.update_book(db, book_id, book)
     if db_book is None:
         raise HTTPException(status_code=404, detail="Book not found")
     return db_book
 
-@app.delete("/books/delete_book/{book_id}", response_model=schemas.Book)
+@app.delete("/books/delete_book/{book_id}", response_model=books_schema.Book)
 def delete_book(book_id: int, db: Session = Depends(get_db)):
     db_book = services.delete_book(db, book_id)
     if db_book is None:
@@ -155,7 +156,7 @@ def verify_token(token: str = Depends(oauth2_scheme)):
 
 class BookListResponse(BaseModel):
     message: str
-    data: List[schemas.Book]
+    data: List[books_schema.Book]
 
 @app.get("/books/get_books_jwt", response_model=BookListResponse)
 async def get_books_jwt(
@@ -221,7 +222,7 @@ app.add_middleware(
 """ After this we can access api's from this port of frontend, but in mobile apps we don't need to use this."""
 
 # Working 3rd party Api's  #
-import requests
+import requests 
 
 
 @app.get("/posts_list")
@@ -366,3 +367,37 @@ def rate_limit_handler(request: Request, exc: RateLimitExceeded):
 @limiter.limit("5/minute")  # Limit to 5 requests per minute
 def data_limit(request: Request):
     return {"message": "This is a rate-limited endpoint."}
+
+
+# Actual project api's #
+# 1  : For test redis working
+@app.get("/redis-test")
+async def redis_test():
+    await redis_client.set("key", "Hello Somya", ex=60)
+    value = await redis_client.get("key")
+    return {
+        "redis": value
+    }
+
+# Verify mail setup by creating a temporary endpoint #
+from fastapi_mail import FastMail, MessageSchema, MessageType
+from core.mail import conf
+
+@app.get("/mail-test")
+async def mail_test():
+
+    message = MessageSchema(
+        subject="FastAPI Mail Test",
+        recipients=["somyanaiwal023@gmail.com"],
+        body="Mail configuration successful.",
+        subtype=MessageType.plain
+    )
+
+    fm = FastMail(conf)
+
+    await fm.send_message(message)
+
+    return {
+        "Success": True,
+        "message": "Otp sent successfully"
+    }
