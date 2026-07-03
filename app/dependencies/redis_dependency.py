@@ -1,4 +1,4 @@
-from core.redis import redis_client
+from app.core.redis import redis_client
 
 
 async def get_redis_client():

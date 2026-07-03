@@ -12,7 +12,7 @@ import os, shutil
 from fastapi.staticfiles import StaticFiles
 # from dotenv import load_dotenv
 from core.config import settings
-from core.redis import redis_client
+from app.core.redis import redis_client
 import schemas.books_schema as books_schema, services.services as services
 
 # Create tables
