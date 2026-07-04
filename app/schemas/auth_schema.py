@@ -1,20 +1,13 @@
-from enum import Enum
 from pydantic import BaseModel, EmailStr, ConfigDict, Field
-from enum.all_enums import UserRole
+from enums.all_enums import UserRole
 
 
 class SignupRequest(BaseModel):
-    username: str = Field(
-        min_length=3,
-        max_length=100
-    )
+    username: str = Field(min_length=3, max_length=100)
 
     email: EmailStr
 
-    password: str = Field(
-        min_length=4,
-        max_length=10
-    )
+    password: str = Field(min_length=8, max_length=100)
 
     role: UserRole
 
@@ -22,19 +15,13 @@ class SignupRequest(BaseModel):
 class VerifyOtpRequest(BaseModel):
     email: EmailStr
 
-    otp: str = Field(
-        min_length=6,
-        max_length=6
-    )
+    otp: str = Field(min_length=6, max_length=6)
+
 
 class VerifyOtpRequest(BaseModel):
     email: EmailStr
 
-    otp: str = Field(
-        min_length=6,
-        max_length=6
-    )
-
+    otp: str = Field(min_length=6, max_length=6)
 
 
 class ResendOtpRequest(BaseModel):
@@ -56,3 +43,7 @@ class AuthResponse(BaseModel):
     access_token: str
 
     token_type: str = "bearer"
+
+
+class MessageResponse(BaseModel):
+    message: str
