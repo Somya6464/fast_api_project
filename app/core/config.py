@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     SECRET_KEY : str
     ALGORITHM : str
     origins : str
+    ACCESS_TOKEN_EXPIRE_MINUTES: int
 
     # Redis
     REDIS_HOST: str

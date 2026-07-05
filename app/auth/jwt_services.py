@@ -4,6 +4,7 @@ from typing import Any
 from jose import jwt, JWTError
 
 from core.config import settings
+from models.user_model import UserModel
 
 
 def create_access_token(
@@ -44,6 +45,20 @@ def decode_access_token(token: str):
     except JWTError:
         return None
 
+
+
+def generate_user_token(user: UserModel) -> str:
+    """
+    Generate JWT for authenticated user.
+    """
+
+    payload = {
+        "sub": str(user.id),
+        "email": user.email,
+        "role": user.role.value,
+    }
+
+    return create_access_token(payload)
 
 """ token = create_access_token(
     {

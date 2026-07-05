@@ -6,6 +6,8 @@ from core.db import get_db
 from schemas.auth_schema import (
     MessageResponse,
     SignupRequest,
+    AuthResponse,
+    VerifyOtpRequest,
 )
 
 router = APIRouter(
@@ -25,6 +27,22 @@ async def signup(
 ):
 
     return await AuthService.signup(
+        request,
+        MessageResponse,
+        db,
+    )
+
+
+@router.post(
+    "/verify-otp",
+    response_model=AuthResponse,
+)
+async def verify_otp(
+    request: VerifyOtpRequest,
+    db: Session = Depends(get_db),
+):
+
+    return await AuthService.verify_otp(
         request,
         db,
     )

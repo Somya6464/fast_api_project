@@ -46,4 +46,5 @@ class AuthResponse(BaseModel):
 
 
 class MessageResponse(BaseModel):
+    success:bool
     message: str
