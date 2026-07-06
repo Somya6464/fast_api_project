@@ -11,19 +11,47 @@ from schemas.auth_schema import (
     AuthResponse,
     VerifyOtpRequest,
     UserResponse,
+    ResendOtpRequest,
+    LoginRequest
 )
 from utils.otp import generate_otp
 from utils.password_validator import validate_password
 from fastapi import HTTPException, status
 from auth.jwt_services import generate_user_token
+import time
 
 
 class AuthService:
 
     @staticmethod
+    async def login(
+        request: LoginRequest,
+        db: Session
+    ):
+        user = db.query(UserModel).filter(UserModel.email == request.email).first()
+
+        if not user:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="User not found",
+            )
+
+        if not verify_password(request.password, user.password):
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Invalid credentials",
+            )
+
+        access_token = generate_user_token(user)
+
+        return AuthResponse(
+            user=UserResponse.model_validate(user),
+            access_token=access_token,
+        )
+
+    @staticmethod
     async def signup(
         signup_data: SignupRequest,
-        response: MessageResponse,
         db: Session,
     ):
 
@@ -53,8 +81,6 @@ class AuthService:
 
         otp = generate_otp()
 
-        # hashed_otp = hash_password(otp)
-        # signup_data["otp"] = hashed_otp
         hashed_password = hash_password(signup_data.password)
 
         redis_payload = {
@@ -63,6 +89,8 @@ class AuthService:
             "password": hashed_password,
             "role": signup_data.role.value,
             "otp": otp,
+            "last_sent": int(time.time()),
+            
         }
 
         await RedisService.save_signup_data(
@@ -133,4 +161,44 @@ class AuthService:
         return AuthResponse(
             user=UserResponse.model_validate(user),
             access_token=access_token,
+        )
+
+    @staticmethod
+    async def resend_otp(request:ResendOtpRequest):
+        signup_data = await RedisService.get_signup_data(request.email)
+
+        if signup_data is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Signup session expired."
+            )
+        now = int(time.time())
+        last_sent = signup_data.get("last_sent", 0)
+        if now - last_sent < 60:
+
+            remaining = 60 - (now - last_sent)
+
+            raise HTTPException(
+                status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                detail=f"Please wait {remaining} seconds before requesting another OTP."
+            )
+
+        otp = generate_otp()
+
+        signup_data["otp"] = str(otp)
+
+        signup_data["last_sent"] = now
+
+        await RedisService.update_signup_data(
+         request.email,
+         signup_data,
+        )
+
+        await EmailService.send_signup_otp(
+            request.email,
+            otp,
+     )
+
+        return MessageResponse(
+            success=True,
+            message= "OTP resent successfully."
         )

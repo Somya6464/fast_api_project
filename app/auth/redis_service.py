@@ -7,18 +7,11 @@ from core.redis import redis_client
 class RedisService:
 
     @staticmethod
-    async def save_signup_data(
-        email: str,
-        data: dict
-    ):
+    async def save_signup_data(email: str, data: dict):
 
         key = f"signup:{email}"
 
-        await redis_client.set(
-            key,
-            json.dumps(data),
-            ex=settings.OTP_EXPIRE_SECONDS
-        )
+        await redis_client.set(key, json.dumps(data), ex=settings.OTP_EXPIRE_SECONDS)
 
     @staticmethod
     async def get_signup_data(
@@ -42,12 +35,19 @@ class RedisService:
         key = f"signup:{email}"
 
         await redis_client.delete(key)
-    
+
     @staticmethod
-    async def otp_exists(
-    email: str
-    ):
+    async def otp_exists(email: str):
 
         key = f"signup:{email}"
 
         return await redis_client.exists(key)
+
+    @staticmethod
+    async def update_signup_data(
+        email: str,
+        data: dict,
+    ):
+        key = f"signup:{email}"
+
+        await redis_client.set(key, json.dumps(data), ex=settings.OTP_EXPIRE_SECONDS)

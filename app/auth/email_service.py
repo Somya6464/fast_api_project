@@ -12,17 +12,26 @@ class EmailService:
             subject="Verify your email",
             recipients=[email],
             body=f"""
-Hello,
+<html>
 
-Your OTP is
+<body>
 
-{otp}
+<h2>Email Verification</h2>
 
-This OTP is valid for 5 minutes.
+<p>Your OTP is</p>
 
-If you didn't request this, ignore this email.
+<h1>{otp}</h1>
+
+<p>
+This OTP is valid for
+<b>5 minutes</b>.
+</p>
+
+</body>
+
+</html>
             """,
-            subtype=MessageType.plain,
+            subtype=MessageType.html,
         )
 
         fm = FastMail(conf)
