@@ -1,13 +1,46 @@
-class LoginResponse {
+class AuthResponse {
+  final UserModel user;
   final String accessToken;
   final String tokenType;
 
-  LoginResponse({required this.accessToken, required this.tokenType});
+  AuthResponse({
+    required this.user,
+    required this.accessToken,
+    required this.tokenType,
+  });
 
-  factory LoginResponse.fromJson(Map<String, dynamic> json) {
-    return LoginResponse(
-      accessToken: json['access_token'] as String? ?? '',
-      tokenType: json['token_type'] as String? ?? '',
+  factory AuthResponse.fromJson(Map<String, dynamic> json) {
+    return AuthResponse(
+      user: UserModel.fromJson(json['user']),
+      accessToken: json['access_token'] ?? '',
+      tokenType: json['token_type'] ?? '',
     );
+  }
+}
+
+class UserModel {
+  final int id;
+  final String username;
+  final String email;
+  final String role;
+
+  UserModel({
+    required this.id,
+    required this.username,
+    required this.email,
+    required this.role,
+  });
+
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      id: json['id'] ?? 0,
+      username: json['username'] ?? '',
+      email: json['email'] ?? '',
+      role: json['role'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {"id": id, "username": username, "email": email, "role": role};
   }
 }

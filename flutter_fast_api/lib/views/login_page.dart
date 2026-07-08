@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../data/book_api_service.dart';
+import '../data/api_services.dart';
 import 'book_list_page.dart';
+import 'signup_page.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -186,6 +187,25 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                     ),
+                  ),
+
+                       SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Don't have an account?"),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SignupScreen(),
+                            ),
+                          );
+                        },
+                        child: const Text("Sign Up"),
+                      ),
+                    ],
                   ),
                 ],
               ),
