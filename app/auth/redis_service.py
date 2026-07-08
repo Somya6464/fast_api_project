@@ -1,26 +1,26 @@
 import json
-
+from upstash_redis import Redis
 from core.config import settings
-from core.redis import redis_client
 
 
 class RedisService:
+    # Initialize Upstash Redis client (synchronous)
+    redis = Redis(
+        url=settings.UPSTASH_REDIS_REST_URL, token=settings.UPSTASH_REDIS_REST_TOKEN
+    )
 
     @staticmethod
     async def save_signup_data(email: str, data: dict):
-
+        """Store signup data with expiration"""
         key = f"signup:{email}"
-
-        await redis_client.set(key, json.dumps(data), ex=settings.OTP_EXPIRE_SECONDS)
+        RedisService.redis.set(key, json.dumps(data))
+        RedisService.redis.expire(key, settings.OTP_EXPIRE_SECONDS)
 
     @staticmethod
-    async def get_signup_data(
-        email: str,
-    ):
-
+    async def get_signup_data(email: str):
+        """Retrieve signup data"""
         key = f"signup:{email}"
-
-        data = await redis_client.get(key)
+        data = RedisService.redis.get(key)
 
         if not data:
             return None
@@ -28,26 +28,20 @@ class RedisService:
         return json.loads(data)
 
     @staticmethod
-    async def delete_signup_data(
-        email: str,
-    ):
-
+    async def delete_signup_data(email: str):
+        """Delete signup data"""
         key = f"signup:{email}"
-
-        await redis_client.delete(key)
+        RedisService.redis.delete(key)
 
     @staticmethod
     async def otp_exists(email: str):
-
+        """Check if OTP exists for email"""
         key = f"signup:{email}"
-
-        return await redis_client.exists(key)
+        return RedisService.redis.exists(key)
 
     @staticmethod
-    async def update_signup_data(
-        email: str,
-        data: dict,
-    ):
+    async def update_signup_data(email: str, data: dict):
+        """Update signup data with new expiration"""
         key = f"signup:{email}"
-
-        await redis_client.set(key, json.dumps(data), ex=settings.OTP_EXPIRE_SECONDS)
+        RedisService.redis.set(key, json.dumps(data))
+        RedisService.redis.expire(key, settings.OTP_EXPIRE_SECONDS)

@@ -16,10 +16,12 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int
 
     # Redis
-    REDIS_HOST: str
-    REDIS_PORT: int
-    REDIS_DB: int
+    # REDIS_HOST: str
+    # REDIS_PORT: int
+    # REDIS_DB: int
     OTP_EXPIRE_SECONDS: int
+    UPSTASH_REDIS_REST_URL: str = ""
+    UPSTASH_REDIS_REST_TOKEN: str = ""
 
     # Mail
     MAIL_USERNAME: str

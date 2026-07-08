@@ -13,3 +13,7 @@ ex: alembic revision --autogenerate -m "add author_id to books"
 alembic upgrade head
 python -m alembic revision --autogenerate -m "add author_id to books"
 python -m alembic upgrade head
+
+5. At the time, when I upload my new work on render I need redis setup so fr that we use unstash for now that integrate redis + render
+
+6. 
