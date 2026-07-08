@@ -7,4 +7,9 @@ solution => For that we enable 2-step verification into the sender gmail -> then
 3. while implementing otp storage into the DB temporaryly it take space and more computation
 solution => To solve this we use redis for temp signup data storage so we are not need to connect from db again & again and no storage needed or table creation as well.
 
-4. 
+4. After creating books table I want to add one more column. I add it into my code but I can't migrate it.
+solution => so for all table migrations of changes make by alembic 
+ex: alembic revision --autogenerate -m "add author_id to books"
+alembic upgrade head
+python -m alembic revision --autogenerate -m "add author_id to books"
+python -m alembic upgrade head

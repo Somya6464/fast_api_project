@@ -24,6 +24,8 @@ from fastapi.staticfiles import StaticFiles
 from core.config import settings
 from core.redis import redis_client
 import schemas.books_schema as books_schema, services.services as services
+from models.user_model import UserModel
+from dependencies.auth_dependency import get_current_user
 
 # Create tables
 create_table()
@@ -52,13 +54,20 @@ async def user_not_found_exception_handler(
 
 # async/await ka use aise hoga#
 @app.get("/books/get_books", response_model=list[books_schema.Book])
-async def get_books(db: Session = Depends(get_db)):
+async def get_books(
+    db: Session = Depends(get_db),
+    current_user: UserModel = Depends(get_current_user),
+):
     await asyncio.sleep(2)
     return services.get_book(db)
 
 
 @app.get("/books/get_books/{book_id}", response_model=books_schema.Book)
-def get_book_by_id(book_id: int, db: Session = Depends(get_db)):
+def get_book_by_id(
+    book_id: int,
+    db: Session = Depends(get_db),
+    current_user: UserModel = Depends(get_current_user),
+):
     db_book = services.get_book_by_id(db, book_id)
     if db_book is None:
         raise HTTPException(status_code=404, detail="Book not found")
@@ -71,13 +80,20 @@ def get_book_by_id(book_id: int, db: Session = Depends(get_db)):
     response_model=books_schema.Book,
     status_code=status.HTTP_201_CREATED,
 )
-def create_book(book: books_schema.BookCreate, db: Session = Depends(get_db)):
+def create_book(
+    book: books_schema.BookCreate,
+    db: Session = Depends(get_db),
+    current_user: UserModel = Depends(get_current_user),
+):
     return services.create_book(db, book)
 
 
 @app.put("/books/update_book/{book_id}", response_model=books_schema.Book)
 def update_book(
-    book_id: int, book: books_schema.BookCreate, db: Session = Depends(get_db)
+    book_id: int,
+    book: books_schema.BookCreate,
+    db: Session = Depends(get_db),
+    current_user: UserModel = Depends(get_current_user),
 ):
     db_book = services.update_book(db, book_id, book)
     if db_book is None:
@@ -86,7 +102,11 @@ def update_book(
 
 
 @app.delete("/books/delete_book/{book_id}", response_model=books_schema.Book)
-def delete_book(book_id: int, db: Session = Depends(get_db)):
+def delete_book(
+    book_id: int,
+    db: Session = Depends(get_db),
+    current_user: UserModel = Depends(get_current_user),
+):
     db_book = services.delete_book(db, book_id)
     if db_book is None:
         raise HTTPException(status_code=404, detail="Book not found")
@@ -136,7 +156,7 @@ SECRET_KEY = settings.origins
 ALGORITHM = (
     settings.ALGORITHM
 )  # WE ALSO HAVE RS256, RS512, HS512, HS384, RS384, ES256, ES384, ES512
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+# ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
@@ -144,7 +164,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
     expire = datetime.now(timezone.utc) + (
-        expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        expires_delta or timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     )
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
