@@ -1,33 +1,30 @@
 from httpcore import request
 from sqlalchemy.orm import Session
 
-from auth.email_service import EmailService
-from auth.redis_service import RedisService
-from auth.security import hash_password, verify_password
-from models.user_model import UserModel
-from schemas.auth_schema import (
+from app.auth.email_service import EmailService
+from app.auth.redis_service import RedisService
+from app.auth.security import hash_password, verify_password
+from app.models.user_model import UserModel
+from app.schemas.auth_schema import (
     SignupRequest,
     MessageResponse,
     AuthResponse,
     VerifyOtpRequest,
     UserResponse,
     ResendOtpRequest,
-    LoginRequest
+    LoginRequest,
 )
-from utils.otp import generate_otp
-from utils.password_validator import validate_password
+from app.utils.otp import generate_otp
+from app.utils.password_validator import validate_password
 from fastapi import HTTPException, status
-from auth.jwt_services import generate_user_token
+from app.auth.jwt_services import generate_user_token
 import time
 
 
 class AuthService:
 
     @staticmethod
-    async def login(
-        request: LoginRequest,
-        db: Session
-    ):
+    async def login(request: LoginRequest, db: Session):
         user = db.query(UserModel).filter(UserModel.email == request.email).first()
 
         if not user:
@@ -90,7 +87,6 @@ class AuthService:
             "role": signup_data.role.value,
             "otp": otp,
             "last_sent": int(time.time()),
-            
         }
 
         await RedisService.save_signup_data(
@@ -164,7 +160,7 @@ class AuthService:
         )
 
     @staticmethod
-    async def resend_otp(request:ResendOtpRequest):
+    async def resend_otp(request: ResendOtpRequest):
         signup_data = await RedisService.get_signup_data(request.email)
 
         if signup_data is None:
@@ -179,7 +175,7 @@ class AuthService:
 
             raise HTTPException(
                 status_code=status.HTTP_429_TOO_MANY_REQUESTS,
-                detail=f"Please wait {remaining} seconds before requesting another OTP."
+                detail=f"Please wait {remaining} seconds before requesting another OTP.",
             )
 
         otp = generate_otp()
@@ -189,16 +185,13 @@ class AuthService:
         signup_data["last_sent"] = now
 
         await RedisService.update_signup_data(
-         request.email,
-         signup_data,
+            request.email,
+            signup_data,
         )
 
         await EmailService.send_signup_otp(
             request.email,
             otp,
-     )
-
-        return MessageResponse(
-            success=True,
-            message= "OTP resent successfully."
         )
+
+        return MessageResponse(success=True, message="OTP resent successfully.")

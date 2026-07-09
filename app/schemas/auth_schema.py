@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr, ConfigDict, Field
-from enums.all_enums import UserRole
+from app.enums.all_enums import UserRole
 
 
 class SignupRequest(BaseModel):
@@ -40,8 +40,9 @@ class AuthResponse(BaseModel):
 
 
 class MessageResponse(BaseModel):
-    success:bool
+    success: bool
     message: str
+
 
 class LoginRequest(BaseModel):
     email: EmailStr

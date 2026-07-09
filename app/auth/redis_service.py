@@ -1,6 +1,6 @@
 import json
 from upstash_redis import Redis
-from core.config import settings
+from app.core.config import settings
 
 
 class RedisService:

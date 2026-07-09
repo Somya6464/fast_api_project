@@ -1,6 +1,6 @@
 from fastapi_mail import FastMail, MessageSchema, MessageType
 
-from core.mail import conf
+from app.core.mail import conf
 
 
 class EmailService:

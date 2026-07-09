@@ -1,6 +1,6 @@
-from models.book_model import Book
+from app.models.book_model import Book
 from sqlalchemy.orm import Session
-from schemas.books_schema import BookCreate
+from app.schemas.books_schema import BookCreate
 
 
 def create_book(db: Session, book: BookCreate):
@@ -10,11 +10,14 @@ def create_book(db: Session, book: BookCreate):
     db.refresh(db_book)
     return db_book
 
+
 def get_book_by_id(db: Session, book_id: int):
     return db.query(Book).filter(Book.id == book_id).first()
 
+
 def get_book(db: Session):
     return db.query(Book).all()
+
 
 def update_book(db: Session, book_id: int, book: BookCreate):
     db_book = db.query(Book).filter(Book.id == book_id).first()
@@ -25,6 +28,7 @@ def update_book(db: Session, book_id: int, book: BookCreate):
     db.commit()
     db.refresh(db_book)
     return db_book
+
 
 def delete_book(db: Session, book_id: int):
     db_book = db.query(Book).filter(Book.id == book_id).first()

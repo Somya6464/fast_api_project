@@ -10,7 +10,7 @@ from fastapi import (
 )
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from core.db import get_db, create_table
+from app.core.db import get_db, create_table
 from sqlalchemy.orm import Session
 import asyncio
 from jose import jwt, JWTError, ExpiredSignatureError
@@ -21,11 +21,12 @@ import os, shutil
 from fastapi.staticfiles import StaticFiles
 
 # from dotenv import load_dotenv
-from core.config import settings
-from core.redis import redis_client
-import schemas.books_schema as books_schema, services.services as services
-from models.user_model import UserModel
-from dependencies.auth_dependency import get_current_user
+from app.core.config import settings
+# from app.core.redis import redis_client
+from app.schemas import books_schema
+from app.services import services
+from app.models.user_model import UserModel
+from app.dependencies.auth_dependency import get_current_user
 
 # Create tables
 create_table()
@@ -435,16 +436,16 @@ def data_limit(request: Request):
 
 # Actual project api's #
 # 1  : For test redis working
-@app.get("/redis-test")
-async def redis_test():
-    await redis_client.set("key", "Hello Somya", ex=60)
-    value = await redis_client.get("key")
-    return {"redis": value}
+# @app.get("/redis-test")
+# async def redis_test():
+#     await redis_client.set("key", "Hello Somya", ex=60)
+#     value = await redis_client.get("key")
+#     return {"redis": value}
 
 
 # Verify mail setup by creating a temporary endpoint #
 from fastapi_mail import FastMail, MessageSchema, MessageType
-from core.mail import conf
+from app.core.mail import conf
 
 
 @app.get("/mail-test")
@@ -466,6 +467,6 @@ async def mail_test():
 
 # actual api's #
 # 1 : Signup api's with proper auth flow, otp verification, resend otp, and jwt implementation.
-from auth.authRouters import router as auth_router
+from app.auth.authRouters import router
 
-app.include_router(auth_router)
+app.include_router(router=router)

@@ -3,13 +3,11 @@ from typing import Any
 
 from jose import jwt, JWTError
 
-from core.config import settings
-from models.user_model import UserModel
+from app.core.config import settings
+from app.models.user_model import UserModel
 
 
-def create_access_token(
-    data: dict[str, Any]
-) -> str:
+def create_access_token(data: dict[str, Any]) -> str:
 
     payload = data.copy()
 
@@ -17,17 +15,9 @@ def create_access_token(
         minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES
     )
 
-    payload.update(
-        {
-            "exp": expire
-        }
-    )
+    payload.update({"exp": expire})
 
-    return jwt.encode(
-        payload,
-        settings.SECRET_KEY,
-        algorithm=settings.ALGORITHM
-    )
+    return jwt.encode(payload, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
 
 
 def decode_access_token(token: str):
@@ -35,16 +25,13 @@ def decode_access_token(token: str):
     try:
 
         payload = jwt.decode(
-            token,
-            settings.SECRET_KEY,
-            algorithms=[settings.ALGORITHM]
+            token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
         )
 
         return payload
 
     except JWTError:
         return None
-
 
 
 def generate_user_token(user: UserModel) -> str:
@@ -59,6 +46,7 @@ def generate_user_token(user: UserModel) -> str:
     }
 
     return create_access_token(payload)
+
 
 """ token = create_access_token(
     {

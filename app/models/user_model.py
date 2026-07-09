@@ -3,8 +3,8 @@ from sqlalchemy import Enum
 
 from sqlalchemy import Boolean, Column, DateTime, Integer, String
 
-from core.db import Base
-from enums.all_enums import UserRole
+from app.core.db import Base
+from app.enums.all_enums import UserRole
 
 
 class UserModel(Base):
