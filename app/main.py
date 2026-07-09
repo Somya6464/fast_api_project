@@ -22,14 +22,29 @@ from fastapi.staticfiles import StaticFiles
 
 # from dotenv import load_dotenv
 from app.core.config import settings
+
 # from app.core.redis import redis_client
 from app.schemas import books_schema
 from app.services import services
 from app.models.user_model import UserModel
 from app.dependencies.auth_dependency import get_current_user
+import uvicorn
 
 # Create tables
 create_table()
+
+
+if __name__ == "__main__":
+    # Render provides a PORT environment variable
+    # Default to 8000 for local development
+    port = int(os.environ.get(default="8000", key="PORT"))
+
+    uvicorn.run(
+        "main:app",  # or "app.main:app" depending on your structure
+        host="0.0.0.0",  # ⚠️ CRITICAL: Must be 0.0.0.0, NOT 127.0.0.1 or localhost
+        port=port,  # ⚠️ CRITICAL: Must use Render's PORT variable
+        reload=False,  # Never use reload=True in production
+    )
 
 app = FastAPI()
 
