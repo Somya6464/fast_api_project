@@ -41,6 +41,7 @@ async def signup(
 ):
 
     return await AuthService.signup(
+        background_tasks,
         request,
         db,
     )
