@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, BackgroundTasks
 from sqlalchemy.orm import Session
 
 from app.auth.service import AuthService
@@ -35,6 +35,7 @@ async def login(
     status_code=201,
 )
 async def signup(
+    background_tasks: BackgroundTasks,
     request: SignupRequest,
     db: Session = Depends(get_db),
 ):

@@ -16,7 +16,7 @@ from app.schemas.auth_schema import (
 )
 from app.utils.otp import generate_otp
 from app.utils.password_validator import validate_password
-from fastapi import HTTPException, status
+from fastapi import HTTPException, status, BackgroundTasks
 from app.auth.jwt_services import generate_user_token
 import time
 
@@ -48,6 +48,7 @@ class AuthService:
 
     @staticmethod
     async def signup(
+        background_tasks: BackgroundTasks,
         signup_data: SignupRequest,
         db: Session,
     ):

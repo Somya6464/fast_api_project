@@ -10,3 +10,4 @@ redis
 fastapi-mail
 slowapi
 alembic
+resend

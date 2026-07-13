@@ -92,7 +92,6 @@ coverage.xml
 *.db
 *.sqlite
 *.sqlite3
-data/
 # Celery (if you use it with FastAPI)
 celerybeat-schedule
 celerybeat.pid

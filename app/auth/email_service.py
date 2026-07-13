@@ -1,17 +1,19 @@
 from fastapi_mail import FastMail, MessageSchema, MessageType
 
 from app.core.mail import conf
+import resend
+from app.core.config import settings
 
 
 class EmailService:
 
-    @staticmethod
     async def send_signup_otp(email: str, otp: str):
-
-        message = MessageSchema(
-            subject="Verify your email",
-            recipients=[email],
-            body=f"""
+        try:
+            params: resend.Emails.SendParams = {
+                "from": settings.EMAIL_FROM,
+                "to": [email],
+                "subject": "Your FastAPI Verification Code",
+                "html": f"""
 <html>
 
 <body>
@@ -30,10 +32,13 @@ This OTP is valid for
 </body>
 
 </html>
-            """,
-            subtype=MessageType.html,
-        )
+""",
+            }
 
-        fm = FastMail(conf)
+            email_response = resend.Emails.send(params)
+            print(f"✅ Email sent successfully! ID: {email_response['id']}")
 
-        await fm.send_message(message)
+        except Exception as e:
+            print(f"❌ Failed to send email: {e}")
+            # In production, you might want to raise an HTTPException here
+            # or log it to a service like Sentry.

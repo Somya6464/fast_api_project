@@ -16,4 +16,8 @@ python -m alembic upgrade head
 
 5. At the time, when I upload my new work on render I need redis setup so fr that we use unstash for now that integrate redis + render
 
-6. 
+6. While deploying my Auth module which was my major part where I setup mail_service, redis and all, so for that we need multiple ports and after solving all issue find by (python -c "import app.main") this command. we got port issue form render and we resolve it by handling multiple ports from (main.py)
+
+7. Got issue to send OTP verification email, due to port connectionTimeOut 
+solution: use resend -> create account and change mail send working as per resend. But for free use may be it won't work for free,
+but when you have domain purchased then you can do this easyly.In my case I don't have any purchased domain.

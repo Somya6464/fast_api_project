@@ -32,7 +32,10 @@ class Settings(BaseSettings):
     MAIL_STARTTLS: bool
     MAIL_SSL_TLS: bool
     MAIL_FROM_NAME: str
-
+    # For production mail service
+    RESEND_API_KEY: str
+    EMAIL_PROVIDER: str
+    EMAIL_FROM: str
 
     class Config:
         env_file = ".env"
