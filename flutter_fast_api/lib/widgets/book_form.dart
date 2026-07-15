@@ -60,6 +60,7 @@ class _BookFormState extends State<BookForm> {
         author: _authorController.text.trim(),
         description: _descriptionController.text.trim(),
         year: int.parse(_yearController.text.trim()),
+        authorId: widget.initialBook?.authorId ?? 6, // Default authorId if not provided
       );
       widget.onSubmit(book);
     }
