@@ -1,460 +1,258 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FastAPI Production-Ready Backend & DevOps Pipeline</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #24292e;
-            background-color: #ffffff;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        h1 {
-            font-size: 2em;
-            border-bottom: 2px solid #eaecef;
-            padding-bottom: 0.3em;
-            margin-top: 24px;
-            margin-bottom: 16px;
-            color: #0366d6;
-        }
-        
-        h2 {
-            font-size: 1.5em;
-            border-bottom: 1px solid #eaecef;
-            padding-bottom: 0.3em;
-            margin-top: 24px;
-            margin-bottom: 16px;
-            color: #0366d6;
-        }
-        
-        h3 {
-            font-size: 1.25em;
-            margin-top: 24px;
-            margin-bottom: 16px;
-            color: #24292e;
-        }
-        
-        p {
-            margin-top: 0;
-            margin-bottom: 16px;
-        }
-        
-        ul, ol {
-            padding-left: 2em;
-            margin-bottom: 16px;
-        }
-        
-        li {
-            margin-bottom: 8px;
-        }
-        
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-bottom: 16px;
-            display: block;
-            overflow: auto;
-        }
-        
-        th, td {
-            border: 1px solid #dfe2e5;
-            padding: 8px 16px;
-            text-align: left;
-        }
-        
-        th {
-            background-color: #f6f8fa;
-            font-weight: 600;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f6f8fa;
-        }
-        
-        code {
-            background-color: rgba(27, 31, 35, 0.05);
-            padding: 0.2em 0.4em;
-            border-radius: 3px;
-            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-            font-size: 85%;
-        }
-        
-        pre {
-            background-color: #f6f8fa;
-            padding: 16px;
-            overflow: auto;
-            border-radius: 6px;
-            margin-bottom: 16px;
-            position: relative;
-        }
-        
-        pre code {
-            background-color: transparent;
-            padding: 0;
-            font-size: 100%;
-            line-height: 1.45;
-        }
-        
-        .code-block {
-            background-color: #24292e;
-            color: #e1e4e8;
-            border-radius: 6px;
-            padding: 16px;
-            overflow-x: auto;
-            margin-bottom: 16px;
-        }
-        
-        .code-block code {
-            background-color: transparent;
-            color: #e1e4e8;
-            padding: 0;
-        }
-        
-        a {
-            color: #0366d6;
-            text-decoration: none;
-        }
-        
-        a:hover {
-            text-decoration: underline;
-        }
-        
-        strong {
-            font-weight: 600;
-        }
-        
-        em {
-            font-style: italic;
-        }
-        
-        .emoji {
-            margin-right: 4px;
-        }
-        
-        blockquote {
-            border-left: 4px solid #dfe2e5;
-            color: #6a737d;
-            padding-left: 16px;
-            margin-bottom: 16px;
-        }
-        
-        .badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-right: 8px;
-            margin-bottom: 8px;
-        }
-        
-        .badge-primary {
-            background-color: #0366d6;
-            color: white;
-        }
-        
-        .badge-success {
-            background-color: #28a745;
-            color: white;
-        }
-        
-        .badge-info {
-            background-color: #17a2b8;
-            color: white;
-        }
-        
-        hr {
-            border: 0;
-            border-top: 1px solid #eaecef;
-            margin: 24px 0;
-        }
-        
-        .json-example {
-            background-color: #f6f8fa;
-            border: 1px solid #dfe2e5;
-            border-radius: 6px;
-            padding: 16px;
-            margin-bottom: 16px;
-            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-            font-size: 14px;
-            overflow-x: auto;
-        }
-        
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            
-            h1 {
-                font-size: 1.5em;
-            }
-            
-            h2 {
-                font-size: 1.25em;
-            }
-            
-            table {
-                font-size: 14px;
-            }
-            
-            th, td {
-                padding: 6px 10px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <h1><span class="emoji">🚀</span>FastAPI Production-Ready Backend & DevOps Pipeline</h1>
-    
-    <p>A robust, scalable, and fully-featured FastAPI backend project, complete with JWT authentication, PostgreSQL, Redis caching, and a full Phase 4 DevOps deployment pipeline (Docker, AWS, Terraform, Kubernetes, and Monitoring).</p>
-    
-    <p><span class="emoji">🔗</span><strong>Live API Documentation</strong>: <a href="https://fast-api-project-z7yg.onrender.com/docs">https://fast-api-project-z7yg.onrender.com/docs</a></p>
-    
-    <hr>
-    
-    <h2><span class="emoji">🛠️</span>Tech Stack</h2>
-    
-    <table>
-        <thead>
-            <tr>
-                <th>Category</th>
-                <th>Technologies</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>Backend</strong></td>
-                <td>FastAPI, Python, Uvicorn, OAuth2, JWT (<code>python-jose</code>)</td>
-            </tr>
-            <tr>
-                <td><strong>Database</strong></td>
-                <td>PostgreSQL, SQLAlchemy (ORM), Alembic (Migrations)</td>
-            </tr>
-            <tr>
-                <td><strong>Caching & Limits</strong></td>
-                <td>Redis (TTL Caching), SlowAPI (Rate Limiting)</td>
-            </tr>
-            <tr>
-                <td><strong>Testing</strong></td>
-                <td>PyTest, HTTPX</td>
-            </tr>
-            <tr>
-                <td><strong>External Tools</strong></td>
-                <td>BeautifulSoup4 (Web Crawling), Requests (3rd Party APIs)</td>
-            </tr>
-            <tr>
-                <td><strong>Frontend</strong></td>
-                <td>Flutter (Dart)</td>
-            </tr>
-            <tr>
-                <td><strong>DevOps & Cloud</strong></td>
-                <td>Docker, Docker Compose, GitHub Actions, AWS (EC2, Nginx, HTTPS), Terraform, Kubernetes</td>
-            </tr>
-            <tr>
-                <td><strong>Monitoring</strong></td>
-                <td>Prometheus, Grafana</td>
-            </tr>
-        </tbody>
-    </table>
-    
-    <hr>
-    
-    <h2><span class="emoji">✨</span>Key Features</h2>
-    
-    <ul>
-        <li><span class="emoji">🔐</span><strong>Authentication</strong>: User registration/login with JWT (OAuth2) and Email OTP verification.</li>
-        <li><span class="emoji">🛡️</span><strong>Security</strong>: Role-based access control, CORS handling, and Rate Limiting (via <code>slowapi</code>).</li>
-        <li><span class="emoji">⚡</span><strong>Performance</strong>: Redis caching with Time-To-Live (TTL) to reduce redundant API calls.</li>
-        <li><span class="emoji">📦</span><strong>Data Management</strong>: Advanced CRUD operations, file uploads, pagination, and search/filtering.</li>
-        <li><span class="emoji">🕸️</span><strong>Integrations</strong>: Secure 3rd-party API integration (e.g., Spotify) and ethical web crawling (with owner permission).</li>
-        <li><span class="emoji">📝</span><strong>Reliability</strong>: Comprehensive unit testing, structured logging, and proper database schema design.</li>
-    </ul>
-    
-    <hr>
-    
-    <h2><span class="emoji">🏗️</span>Core Architecture Concepts</h2>
-    
-    <ul>
-        <li><strong>Dependency Injection</strong>: Utilizing FastAPI's built-in <code>Depends()</code> to create single-responsibility service classes that can be imported and reused anywhere.</li>
-        <li><strong>Middleware</strong>: Implemented as a protected layer intercepting every request/response for logging, CORS, and security checks.</li>
-        <li><strong>Environment Management</strong>: Centralized <code>config.py</code> using Pydantic <code>BaseSettings</code> to load and validate <code>.env</code> variables securely.</li>
-        <li><strong>Database Choice</strong>: PostgreSQL is used over SQLite. While SQLite is lightweight, raw SQLite often leads to complex SQL queries and messy code. PostgreSQL + SQLAlchemy + Alembic ensures robust ORM capabilities and clean, version-controlled migrations.</li>
-        <li><strong>Custom Responses</strong>: Utilizing FastAPI's <code>status</code> module to return precise, standard HTTP response codes.</li>
-    </ul>
-    
-    <hr>
-    
-    <h2><span class="emoji"></span>Getting Started</h2>
-    
-    <h3>1. Prerequisites</h3>
-    <ul>
-        <li>Python 3.9+</li>
-        <li>PostgreSQL installed and running</li>
-        <li>Redis server (for caching)</li>
-    </ul>
-    
-    <h3>2. Installation & Setup</h3>
-    
-    <div class="code-block">
-        <code># 1. Create and activate a virtual environment
-python -m venv env
-source env/bin/activate  # On Windows: env\Scripts\activate
+<h1>🚀 FastAPI Production-Ready Backend & DevOps Pipeline</h1>
 
-# 2. Install all required packages
-pip install -r requirements.txt
+<p>A robust, scalable, and fully-featured FastAPI backend project, complete with JWT authentication, PostgreSQL, Redis caching, and a full Phase 4 DevOps deployment pipeline.</p>
 
-# 3. Create a .env file based on .env.example and fill in your credentials
-# (DB_URL, SECRET_KEY, REDIS_URL, etc.)
+<p><strong>🔗 LIVE LINK:</strong> <a href="https://fast-api-project-z7yg.onrender.com/docs">https://fast-api-project-z7yg.onrender.com/docs</a></p>
 
-# 4. Run database migrations (Alembic)
-alembic upgrade head
+<hr>
 
-# 5. (Optional) Interactive DB setup via IPython
-ipython
->>> import db, models
->>> db.create_table()  # Creates tables in PostgreSQL directly
->>> exit()
+<h2>🛠️ Tech Stack</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Technologies</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Backend</strong></td>
+      <td>FastAPI, Python, Uvicorn, OAuth2, JWT (python-jose)</td>
+    </tr>
+    <tr>
+      <td><strong>Database</strong></td>
+      <td>PostgreSQL, SQLAlchemy (ORM), Alembic (Migrations)</td>
+    </tr>
+    <tr>
+      <td><strong>Caching & Limits</strong></td>
+      <td>Redis (TTL Caching), SlowAPI (Rate Limiting)</td>
+    </tr>
+    <tr>
+      <td><strong>Testing</strong></td>
+      <td>PyTest, HTTPX</td>
+    </tr>
+    <tr>
+      <td><strong>External Tools</strong></td>
+      <td>BeautifulSoup4 (Web Crawling), Requests (3rd Party APIs)</td>
+    </tr>
+    <tr>
+      <td><strong>Frontend</strong></td>
+      <td>Flutter (Dart)</td>
+    </tr>
+    <tr>
+      <td><strong>DevOps & Cloud</strong></td>
+      <td>Docker, Docker Compose, GitHub Actions, AWS (EC2, Nginx, HTTPS), Terraform, Kubernetes</td>
+    </tr>
+    <tr>
+      <td><strong>Monitoring</strong></td>
+      <td>Prometheus, Grafana</td>
+    </tr>
+  </tbody>
+</table>
 
-# 6. Start the development server
-uvicorn main:app --reload</code>
-    </div>
-    
-    <h3>3. Environment Variables (<code>.env</code> example)</h3>
-    
-    <div class="code-block">
-        <code>DATABASE_URL=postgresql://user:password@localhost:5432/fastapi_db
-SECRET_KEY=your-super-secret-jwt-key
-ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=30
-REDIS_URL=redis://localhost:6379/0</code>
-    </div>
-    
-    <hr>
-    
-    <h2><span class="emoji">🧪</span>Testing</h2>
-    
-    <p>We use <code>pytest</code> for unit and integration testing.</p>
-    
-    <div class="code-block">
-        <code># Install testing dependencies
-pip install pytest httpx
+<hr>
 
-# Run all tests
-pytest
+<h2>⚡ FastAPI Important Commands</h2>
+<ol>
+  <li>Firstly create an env to start the project work.</li>
+  <li>By entering all package names which are used, run this command: <code>pip install -r requirements.txt</code> (this will install all the mentioned packages).</li>
+  <li>Then create some essential files, initialize them inside <code>main.py</code>.</li>
+  <li>For running the server use: <code>uvicorn main:app --reload</code></li>
+  <li>Sometimes we use <code>ipython</code> command for:
+    <pre><code>In [1]: import db, models
+In [2]: db.create_table()</code></pre>
+    Run these commands which will help us to create a table in PostgreSQL directly.
+  </li>
+  <li>To send custom response codes we import <code>status</code> and use it with API methods.</li>
+</ol>
 
-# Run with verbose output and print statements
-pytest -v -s</code>
-    </div>
-    
-    <p><em>Note: If you encounter HTTP client errors during testing, ensure <code>httpx</code> is installed.</em></p>
-    
-    <hr>
-    
-    <h2><span class="emoji">🌐</span>Advanced Integrations</h2>
-    
-    <ul>
-        <li><strong>3rd Party APIs</strong>: Uses the <code>requests</code> library to fetch data (e.g., Spotify song lists) and serve it through our secure endpoints, masking the original source URL from the end user.</li>
-        <li><strong>Web Crawling</strong>: Uses <code>beautifulsoup4</code> to extract specific HTML widgets/data. <em>Ethical Note: Always obtain explicit permission from the site owner before crawling to avoid copyright issues.</em></li>
-        <li><strong>Pagination</strong>: Applied to crawled or large dataset responses to ensure optimal performance and manageable payload sizes.</li>
-    </ul>
-    
-    <hr>
-    
-    <h2><span class="emoji">🚢</span>Deployment (Render)</h2>
-    
-    <p>For quick cloud deployment, the project is configured for Render.</p>
-    
-    <div class="code-block">
-        <code># Generate the requirements file
-pip freeze > requirements.txt</code>
-    </div>
-    
-    <p>The live application is automatically deployed and accessible at:<br>
-    👉 <a href="https://fast-api-project-z7yg.onrender.com/docs">https://fast-api-project-z7yg.onrender.com/docs</a></p>
-    
-    <hr>
-    
-    <h2><span class="emoji">⚙️</span>Phase 4: DevOps & Infrastructure</h2>
-    
-    <p>This project includes a complete DevOps learning and implementation pipeline without starting over.</p>
-    
-    <h3><span class="emoji">🐳</span>Docker & CI/CD</h3>
-    <ul>
-        <li><strong>Docker</strong>: <code>Dockerfile</code> and <code>docker-compose.yml</code> to run FastAPI and PostgreSQL together seamlessly.</li>
-        <li><strong>GitHub Actions</strong>: Automated pipeline to run <code>pytest</code>, build the Docker image, and push it to a container registry on every push/PR.</li>
-    </ul>
-    
-    <h3><span class="emoji">☁️</span>AWS & Terraform</h3>
-    <ul>
-        <li><strong>Terraform</strong>: Infrastructure as Code (IaC) scripts to automate the creation of AWS EC2 instances and configure Security Groups.</li>
-        <li><strong>AWS Deployment</strong>: Dockerized app deployed on EC2, fronted by <strong>Nginx</strong> as a reverse proxy, with <strong>HTTPS</strong> configured via Let's Encrypt.</li>
-    </ul>
-    
-    <h3><span class="emoji">☸️</span>Kubernetes (K8s)</h3>
-    <ul>
-        <li>Deploy the application using K8s manifests.</li>
-        <li>Scale replicas for high availability.</li>
-        <li>Configure <strong>Ingress</strong> for external access.</li>
-        <li>Store sensitive data securely using K8s <strong>Secrets</strong>.</li>
-    </ul>
-    
-    <h3><span class="emoji">📊</span>Monitoring</h3>
-    <ul>
-        <li><strong>Prometheus</strong>: Integrated to scrape custom and default FastAPI metrics.</li>
-        <li><strong>Grafana</strong>: Dashboards created to visualize API health, request rates, and cache hit ratios.</li>
-    </ul>
-    
-    <hr>
-    
-    <h2><span class="emoji">🔑</span>API Usage Example</h2>
-    
-    <p><strong>Authentication Response:</strong><br>
-    Upon successful login, the API returns a JWT token structured as follows:</p>
-    
-    <div class="json-example">
-{
+<hr>
+
+<h2>🏗️ Core Architecture Concepts</h2>
+
+<h3>Dependency Injection</h3>
+<ul>
+  <li><strong>Means:</strong> Create a service class for single responsibility which we use anywhere whenever we want by importing it.</li>
+  <li><code>Depends()</code>: It is an in-built method in FastAPI which we can use for dependency injection.</li>
+</ul>
+
+<h3>Middleware</h3>
+<ul>
+  <li><strong>Means:</strong> This is the protected layer that comes between every request/response.</li>
+</ul>
+
+<h3>SQLite and SQLAlchemy</h3>
+<ul>
+  <li><strong>Que:</strong> Why we are not using SQLite in FastAPIs?</li>
+  <li><strong>Ans:</strong> It doesn't have ORM, need to write complex SQL queries, creates messy code.</li>
+</ul>
+
+<h3>All about JWT</h3>
+<ul>
+  <li>JSON Web Token</li>
+  <li>Token has 3 parts: <code>{header, payload, signature}</code></li>
+  <li>Need to install a library: <code>pip install python-jose</code></li>
+  <li>jose: JavaScript Object Signature and Encryption</li>
+</ul>
+
+<h3>CORS Handling</h3>
+<ul>
+  <li><strong>CORS:</strong> Cross-Origin Resource Sharing</li>
+  <li>Its usage is when your frontend or backend runs on different ports (in web specially).</li>
+  <li>So it whitelists the frontend port so it can access the APIs.</li>
+</ul>
+
+<h3>Work with .env files</h3>
+<ul>
+  <li>In large projects we create <code>config.py</code> where we load env instance and then create a settings class like we created into our project.</li>
+  <li>Then declare all env values into this class.</li>
+  <li>Finally import this class wherever you want and use the values (shown in <code>main.py</code>, <code>db.py</code>).</li>
+</ul>
+
+<hr>
+
+<h2>🧪 Testing with PyTest</h2>
+<ul>
+  <li>Install: <code>pip install pytest</code></li>
+  <li>Create APIs as usually you do.</li>
+  <li>And then write the test cases into test file.</li>
+  <li>Finally type <code>pytest</code> in terminal to start test cases.</li>
+  <li>If error comes then install: <code>pip install httpx</code> or <code>httpx2</code>.</li>
+  <li>And run again or resolve error accordingly.</li>
+</ul>
+
+<hr>
+
+<h2>🌐 Advanced Integrations</h2>
+
+<h3>3rd Party API Integration</h3>
+<ul>
+  <li>Like using Spotify API to get the list of songs and then return those from our personal APIs.</li>
+  <li>So the 3rd party URL was secure and user don't know the source at all.</li>
+  <li>Install: <code>pip install requests</code></li>
+</ul>
+
+<h3>Web Crawling</h3>
+<ul>
+  <li>Used to extract some data from someone's site or page to use it into our map.</li>
+  <li>Install: <code>pip install beautifulsoup4</code></li>
+  <li>Before using someone's site data we need permission from the owner of the site, so we can't get copyright issues.</li>
+  <li>Extract the widgets like Flutter using the class of that HTML page.</li>
+</ul>
+
+<h3>Pagination</h3>
+<ul>
+  <li>Use the web crawling to get the data from a new site and perform pagination on that data.</li>
+</ul>
+
+<h3>Caching</h3>
+<ul>
+  <li>Use to speed up the processes, means once we get data we store it to use again so we don't need to call API for that again.</li>
+  <li>Time-to-live (TTL)</li>
+</ul>
+
+<h3>Rate Limiting</h3>
+<ul>
+  <li>Prevent user or Attackers from making too many requests to crash our servers.</li>
+  <li>So into this we set the API hit limit for user-wise so a user may not hit an API above his rate limit.</li>
+  <li>Install: <code>pip install slowapi</code></li>
+</ul>
+
+<hr>
+
+<h2>🚢 Project Deployment using RENDER</h2>
+<ul>
+  <li>Generate the requirements.txt file using <code>pip freeze > requirements.txt</code> command.</li>
+  <li><strong>LIVE LINK:</strong> <a href="https://fast-api-project-z7yg.onrender.com/docs">https://fast-api-project-z7yg.onrender.com/docs</a></li>
+</ul>
+
+<hr>
+
+<h2>💼 Worked Tasks & Learned Technologies into this Project</h2>
+
+<h3>Backend</h3>
+<ul>
+  <li>User registration/login</li>
+  <li>JWT authentication (OAuth with email OTP verification)</li>
+  <li>CRUD operations</li>
+  <li>Caching (Redis)</li>
+  <li>File uploads</li>
+  <li>Pagination</li>
+  <li>Search/filtering</li>
+  <li>Role-based access</li>
+  <li>Logging</li>
+  <li>Unit tests</li>
+</ul>
+
+<h3>Database</h3>
+<ul>
+  <li>PostgreSQL</li>
+  <li>Proper schema design</li>
+  <li>Migrations (Alembic)</li>
+</ul>
+
+<h3>Frontend</h3>
+<ul>
+  <li>Flutter (Dart)</li>
+</ul>
+
+<hr>
+
+<h2>⚙️ Phase 4: Add DevOps without starting over</h2>
+<p>Now use the same project to learn DevOps.</p>
+
+<h3>Docker</h3>
+<ul>
+  <li>Create a Dockerfile</li>
+  <li>Use Docker Compose</li>
+  <li>Run FastAPI + PostgreSQL together</li>
+</ul>
+
+<h3>GitHub Actions</h3>
+<ul>
+  <li>Run tests automatically</li>
+  <li>Build Docker image</li>
+  <li>Push image to a container registry</li>
+</ul>
+
+<h3>AWS</h3>
+<ul>
+  <li>Launch an EC2 instance</li>
+  <li>Deploy your Dockerized app</li>
+  <li>Configure Nginx</li>
+  <li>Set up HTTPS</li>
+</ul>
+
+<h3>Terraform</h3>
+<ul>
+  <li>Create the EC2 instance</li>
+  <li>Create security groups</li>
+  <li>Automate infrastructure creation</li>
+</ul>
+
+<h3>Kubernetes</h3>
+<ul>
+  <li>Deploy your app</li>
+  <li>Scale replicas</li>
+  <li>Configure Ingress</li>
+  <li>Store secrets securely</li>
+</ul>
+
+<h3>Monitoring</h3>
+<ul>
+  <li>Add Prometheus metrics</li>
+  <li>Create Grafana dashboards</li>
+</ul>
+
+<hr>
+
+<h2>💡 Some Important Things We Should Know</h2>
+<ul>
+  <li>In this we have Uvicorn: it's basically a default server to run the application.</li>
+</ul>
+
+<p><strong>JWT Token Example:</strong></p>
+<pre><code>{
   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc4MTYzMTY2N30.Fcj4bu2WrtP5DtDn-sU_cC9qp5JoeIy0dIWbQFlZFs8",
   "token_type": "bearer"
-}
-    </div>
-    
-    <p><em>JWT Structure</em>: <code>{ header, payload, signature }</code> secured via <code>python-jose</code> (JavaScript Object Signature and Encryption).</p>
-    
-    <hr>
-    
-    <h2><span class="emoji"></span>Important Notes</h2>
-    
-    <ul>
-        <li><strong>Uvicorn</strong>: The default ASGI server used to run the FastAPI application efficiently.</li>
-        <li><strong>CORS</strong>: Configured to whitelist specific frontend ports (e.g., Flutter web or local dev servers) to allow secure cross-origin resource sharing.</li>
-        <li><strong>Rate Limiting</strong>: Powered by <code>slowapi</code> to prevent attackers or overly aggressive users from crashing the server with too many requests.</li>
-    </ul>
-    
-    <hr>
-    
-    <h2><span class="emoji">🤝</span>Contributing</h2>
-    
-    <ol>
-        <li>Fork the repository.</li>
-        <li>Create your feature branch (<code>git checkout -b feature/AmazingFeature</code>).</li>
-        <li>Commit your changes (<code>git commit -m 'Add some AmazingFeature'</code>).</li>
-        <li>Push to the branch (<code>git push origin feature/AmazingFeature</code>).</li>
-        <li>Open a Pull Request.</li>
-    </ol>
-    
-    <hr>
-    
-</body>
-</html>
+}</code></pre>
