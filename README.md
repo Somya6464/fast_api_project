@@ -75,8 +75,59 @@ ans: It doesn't have ORM, need to write complex sql queries, create messy code,
 - generate the requirements.txt file using {pip freeze > requirements.txt} command.
 - LIVE LINK: https://fast-api-project-z7yg.onrender.com/docs
 
+<h3>Worked tasks & learned technologies into this project</h3>
+<b>Backend</b>
+User registration/login
+JWT authentication (OAuth with email otp verification)
+CRUD operations
+caching (Redis)
+File uploads
+Pagination
+Search/filtering
+Role-based access
+Logging
+Unit tests
+<b>Database</b>
+PostgreSQL
+Proper schema design
+Migrations (alembic)
+<b>Frontend</b>
+Flutter (Dart)
 
+<h3> Phase 4: Add DevOps without starting over </h3>
+Now use the same project to learn DevOps.
+<b>Docker</b>
+Create a Dockerfile
+Use Docker Compose
+Run FastAPI + PostgreSQL together
+GitHub Actions
+Run tests automatically
+Build Docker image
+Push image to a container registry
 
+<b>AWS</b>
+
+Launch an EC2 instance
+Deploy your Dockerized app
+Configure Nginx
+Set up HTTPS
+
+<b>Terraform</b>
+
+Create the EC2 instance
+Create security groups
+Automate infrastructure creation
+
+<b>Kubernates</b>
+
+Deploy your app
+Scale replicas
+Configure Ingress
+Store secrets securely
+
+<b>Monitoring</b>
+Add Prometheus metrics
+Create Grafana dashboards
 
 
 
