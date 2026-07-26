@@ -251,6 +251,21 @@ In [2]: db.create_table()</code></pre>
   <li>In this we have Uvicorn: it's basically a default server to run the application.</li>
 </ul>
 
+<h2>📈 Alembic commands for Database migration </h2>
+
+
+| Command                                        | Purpose                                 |
+| ---------------------------------------------- | --------------------------------------- |
+| `alembic init alembic`                         | Initialize Alembic                      |
+| `alembic revision -m "message"`                | Create an empty migration               |
+| `alembic revision --autogenerate -m "message"` | Generate a migration from model changes |
+| `alembic upgrade head`                         | Apply all pending migrations            |
+| `alembic downgrade -1`                         | Revert the last migration               |
+| `alembic current`                              | Show the current migration version      |
+| `alembic history`                              | Show migration history                  |
+
+
+
 <p><strong>JWT Token Example:</strong></p>
 <pre><code>{
   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc4MTYzMTY2N30.Fcj4bu2WrtP5DtDn-sU_cC9qp5JoeIy0dIWbQFlZFs8",
