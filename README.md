@@ -251,7 +251,7 @@ In [2]: db.create_table()</code></pre>
   <li>In this we have Uvicorn: it's basically a default server to run the application.</li>
 </ul>
 
-<h2>📈 Alembic commands for Database migration </h2> 
+<h2>📈 Alembic commands for Database migration </h2>  
 
 
 | Command                                        | Purpose                                 |
