@@ -103,10 +103,28 @@ class BookApiService {
     }
   }
 
+  Future<Options> _authorizedOptions() async {
+    final token = await LocalStorageHelper.getToken();
+
+    if (token == null || token.isEmpty) {
+      throw Exception("User is not logged in.");
+    }
+
+    return Options(
+      headers: {
+        "Authorization": "Bearer $token",
+        "Content-Type": Headers.jsonContentType,
+      },
+    );
+  }
+
   Future<List<BookListResponse>> getBooks() async {
     try {
       log("api endpoint: ${baseUrl}books/get_books");
-      final response = await _dio.get('${baseUrl}books/get_books');
+      final response = await _dio.get(
+        '${baseUrl}books/get_books',
+        options: await _authorizedOptions(),
+      );
       log("response: ${response.data}");
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data;
@@ -121,7 +139,10 @@ class BookApiService {
   Future<bool> deleteBook(int bookId) async {
     try {
       log("api endpoint: ${baseUrl}books/delete_book/$bookId");
-      final response = await _dio.delete('${baseUrl}books/delete_book/$bookId');
+      final response = await _dio.delete(
+        '${baseUrl}books/delete_book/$bookId',
+        options: await _authorizedOptions(),
+      );
       log("response: ${response.data}");
       return response.statusCode == 200 || response.statusCode == 204;
     } on DioException catch (e) {
@@ -134,6 +155,7 @@ class BookApiService {
       log("api endpoint: ${baseUrl}books/update_book/$bookId");
       final response = await _dio.put(
         '${baseUrl}books/update_book/$bookId',
+        options: await _authorizedOptions(),
         data: {
           'title': book.title,
           'description': book.description,
@@ -157,9 +179,11 @@ class BookApiService {
       log("api endpoint: ${baseUrl}books/create_book");
       final response = await _dio.post(
         '${baseUrl}books/create_book',
+        options: await _authorizedOptions(),
         data: {
           'title': book.title,
           'description': book.description,
+          'author_id': book.authorId,
           'author': book.author,
           'year': book.year,
         },
