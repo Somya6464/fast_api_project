@@ -266,7 +266,7 @@ In [2]: db.create_table()</code></pre>
 
 
 
-<p><strong>JWT Token Example:</strong></p>
+<p><strong>JWT Token Example:</strong></p> 
 <pre><code>{
   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc4MTYzMTY2N30.Fcj4bu2WrtP5DtDn-sU_cC9qp5JoeIy0dIWbQFlZFs8",
   "token_type": "bearer"
