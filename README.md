@@ -1,169 +1,288 @@
-<h1> Cloud Engineering Path </h1>
+<h1>☁️ Cloud Computing Roadmap</h1>
 
+<p>
+A structured roadmap to become a <strong>Cloud Engineer</strong> or
+<strong>Cloud Solutions Architect</strong>. Follow each phase in order to
+build strong fundamentals before moving to advanced cloud technologies.
+</p>
 
-Follow each phase in order to build strong fundamentals before moving to advanced cloud technologies.
+<hr>
 
-📌 Phase 1: Build the Non-Negotiable Foundations
-Before touching any cloud platform, master the core concepts that modern infrastructure is built upon.
+<h2>📌 Phase 1: Build the Non-Negotiable Foundations</h2>
 
-🐧 Linux Administration
-More than 90% of cloud servers run Linux, making it one of the most important skills for every cloud professional.
+<p>
+Before touching any cloud platform, master the core concepts that modern
+infrastructure is built upon.
+</p>
 
-Learn how to:
+<h3>🐧 Linux Administration</h3>
 
-Navigate the Linux command line
-Manage files and permissions
-Monitor CPU, memory, and disk usage
-Work with processes and services
-Connect to remote servers using SSH
-🌐 Networking Basics
-Networking is the backbone of cloud computing. If you don't understand networking, you won't be able to securely connect or troubleshoot cloud resources.
+<p>
+More than <strong>90% of cloud servers run Linux</strong>, making it one of
+the most important skills for every cloud professional.
+</p>
 
-Topics to cover:
+<p><strong>Learn how to:</strong></p>
 
-TCP/IP
-IP Addresses
-Ports
-DNS
-HTTP & HTTPS
-Subnets
-Firewalls
-Routing
-🔄 Version Control (Git & GitHub)
-Version control is essential for collaboration and tracking changes in projects.
+<ul>
+    <li>Navigate the Linux command line</li>
+    <li>Manage files and permissions</li>
+    <li>Monitor CPU, memory, and disk usage</li>
+    <li>Work with processes and services</li>
+    <li>Connect to remote servers using SSH</li>
+</ul>
 
-Learn:
+<h3>🌐 Networking Basics</h3>
 
-Git fundamentals
-Branching & merging
-Pull requests
-GitHub repositories
-Collaboration workflows
-☁️ Phase 2: Choose One Cloud Provider
-Don't try to learn all three cloud providers at once.
+<p>
+Networking is the backbone of cloud computing. Without networking knowledge,
+you cannot securely connect, manage, or troubleshoot cloud resources.
+</p>
+
+<p><strong>Topics to cover:</strong></p>
+
+<ul>
+    <li>TCP/IP</li>
+    <li>IP Addresses</li>
+    <li>Ports</li>
+    <li>DNS</li>
+    <li>HTTP &amp; HTTPS</li>
+    <li>Subnets</li>
+    <li>Firewalls</li>
+    <li>Routing</li>
+</ul>
+
+<h3>🔄 Version Control (Git &amp; GitHub)</h3>
+
+<p>
+Version control is essential for collaboration and tracking changes in your
+projects.
+</p>
+
+<ul>
+    <li>Git Fundamentals</li>
+    <li>Branching &amp; Merging</li>
+    <li>Pull Requests</li>
+    <li>GitHub Repositories</li>
+    <li>Collaboration Workflows</li>
+</ul>
+
+<hr>
+
+<h2>☁️ Phase 2: Choose One Cloud Provider</h2>
+
+<p>
+<strong>Do not try to learn all three cloud providers at once.</strong>
 Master one platform first before exploring the others.
+</p>
 
-Option 1 — AWS (Amazon Web Services)
-🌍 Global market leader
-Highest demand across industries
-Largest ecosystem of cloud services
-Option 2 — Microsoft Azure
-🏢 Widely adopted in enterprise environments
-Strong integration with Microsoft technologies
-Option 3 — Google Cloud Platform (GCP)
-🤖 Excellent for AI, Machine Learning, and Data Analytics
-Popular among startups and modern tech companies
-🎯 Core Services to Master
-💻 Compute
-Virtual Machines
-AWS EC2
-Azure Virtual Machines
-Auto Scaling
-💾 Storage
-Object Storage
-AWS S3
-Azure Blob Storage
-Block Storage
-🗄️ Databases
-Managed SQL Databases
-NoSQL Databases
-Amazon RDS
-DynamoDB
-🌐 Networking
-Virtual Private Cloud (VPC)
-Subnets
-Route Tables
-Security Groups
-🔐 Identity & Access Management (IAM)
-Users
-Roles
-Policies
-Principle of Least Privilege (PoLP)
-⚙️ Phase 3: Infrastructure as Code (IaC) & Automation
-Modern cloud environments are rarely built manually through the console. Infrastructure is created and managed using code.
+<h3>🌍 AWS (Amazon Web Services)</h3>
 
-🏗️ Terraform
-The industry-standard tool for provisioning cloud infrastructure.
+<ul>
+    <li>Global market leader</li>
+    <li>Highest industry demand</li>
+    <li>Largest cloud ecosystem</li>
+</ul>
 
-Learn:
+<h3>🏢 Microsoft Azure</h3>
 
-Providers
-Resources
-Variables
-Modules
-State Management
-🐍 Scripting
-Choose one scripting language:
+<ul>
+    <li>Widely used in enterprise environments</li>
+    <li>Strong Microsoft ecosystem integration</li>
+</ul>
 
-Python (Recommended)
-Bash
-Use scripting to automate:
+<h3>🤖 Google Cloud Platform (GCP)</h3>
 
-Infrastructure tasks
-Deployments
-Backups
-Monitoring
-📦 Phase 4: Containers & Orchestration
-Modern applications are packaged into containers to ensure they run consistently across different environments.
+<ul>
+    <li>Excellent for AI and Machine Learning</li>
+    <li>Popular among startups and data-driven companies</li>
+</ul>
 
-🐳 Docker
-Learn how to:
+<h3>🎯 Core Services to Master</h3>
 
-Build Docker images
-Create Dockerfiles
-Run containers
-Manage Docker volumes
-Use Docker Compose
-☸️ Kubernetes (K8s)
-A must-have skill for mid-level and advanced cloud roles.
+<h4>💻 Compute</h4>
 
-Key concepts:
+<ul>
+    <li>Virtual Machines (AWS EC2 / Azure VMs)</li>
+    <li>Auto Scaling</li>
+</ul>
 
-Pods
-Deployments
-Services
-ConfigMaps
-Secrets
-Scaling
-Cluster Management
-🚀 Phase 5: CI/CD & Monitoring
-🔁 Continuous Integration & Continuous Deployment (CI/CD)
+<h4>💾 Storage</h4>
+
+<ul>
+    <li>Object Storage (AWS S3 / Azure Blob Storage)</li>
+    <li>Block Storage</li>
+</ul>
+
+<h4>🗄️ Databases</h4>
+
+<ul>
+    <li>Managed SQL Databases</li>
+    <li>NoSQL Databases (Amazon DynamoDB)</li>
+    <li>Amazon RDS</li>
+</ul>
+
+<h4>🌐 Networking</h4>
+
+<ul>
+    <li>Virtual Private Cloud (VPC)</li>
+    <li>Subnets</li>
+    <li>Route Tables</li>
+    <li>Security Groups</li>
+</ul>
+
+<h4>🔐 Identity &amp; Access Management (IAM)</h4>
+
+<ul>
+    <li>Users</li>
+    <li>Roles</li>
+    <li>Policies</li>
+    <li>Principle of Least Privilege (PoLP)</li>
+</ul>
+
+<hr>
+
+<h2>⚙️ Phase 3: Infrastructure as Code (IaC) &amp; Automation</h2>
+
+<p>
+Modern cloud environments are rarely built manually through a web console.
+Infrastructure is created and managed using code.
+</p>
+
+<h3>🏗️ Terraform</h3>
+
+<p>The industry-standard tool for provisioning cloud infrastructure.</p>
+
+<ul>
+    <li>Providers</li>
+    <li>Resources</li>
+    <li>Variables</li>
+    <li>Modules</li>
+    <li>State Management</li>
+</ul>
+
+<h3>🐍 Scripting</h3>
+
+<p>Learn one scripting language:</p>
+
+<ul>
+    <li>Python (Recommended)</li>
+    <li>Bash</li>
+</ul>
+
+<p>Use scripting to automate:</p>
+
+<ul>
+    <li>Infrastructure Tasks</li>
+    <li>Deployments</li>
+    <li>Backups</li>
+    <li>Monitoring</li>
+</ul>
+
+<hr>
+
+<h2>📦 Phase 4: Containers &amp; Orchestration</h2>
+
+<p>
+Modern applications are packaged into containers so they can run consistently
+across different environments.
+</p>
+
+<h3>🐳 Docker</h3>
+
+<ul>
+    <li>Build Docker Images</li>
+    <li>Create Dockerfiles</li>
+    <li>Run Containers</li>
+    <li>Manage Volumes</li>
+    <li>Use Docker Compose</li>
+</ul>
+
+<h3>☸️ Kubernetes (K8s)</h3>
+
+<p>A must-have skill for mid-level and advanced cloud roles.</p>
+
+<ul>
+    <li>Pods</li>
+    <li>Deployments</li>
+    <li>Services</li>
+    <li>ConfigMaps</li>
+    <li>Secrets</li>
+    <li>Scaling</li>
+    <li>Cluster Management</li>
+</ul>
+
+<hr>
+
+<h2>🚀 Phase 5: CI/CD &amp; Monitoring</h2>
+
+<h3>🔁 Continuous Integration &amp; Continuous Deployment</h3>
+
+<p>
 Understand how code moves automatically from a Git repository to production.
+</p>
 
-Popular tools:
+<ul>
+    <li>GitHub Actions</li>
+    <li>Jenkins</li>
+</ul>
 
-GitHub Actions
-Jenkins
-📊 Monitoring & Observability
-Learn how to:
+<h3>📊 Monitoring &amp; Observability</h3>
 
-Read application logs
-Monitor infrastructure
-Set up alerts
-Track cloud costs
-Common tools:
+<p>Learn how to:</p>
 
-AWS CloudWatch
-Azure Monitor
-🎓 Recommended Learning Path & Certifications
-Validate your skills with industry-recognised certifications.
+<ul>
+    <li>Read Application Logs</li>
+    <li>Monitor Infrastructure</li>
+    <li>Set Up Alerts</li>
+    <li>Track Cloud Costs</li>
+</ul>
 
-🟢 Beginner Level
-Start with a foundational certification to understand cloud concepts and terminology.
+<p><strong>Common Tools:</strong></p>
 
-AWS Certified Cloud Practitioner
-Microsoft Azure Fundamentals (AZ-900)
-🔵 Associate Level
-Move to hands-on certifications that focus on designing and managing cloud infrastructure.
+<ul>
+    <li>AWS CloudWatch</li>
+    <li>Azure Monitor</li>
+</ul>
 
-AWS Certified Solutions Architect – Associate
-Microsoft Azure Administrator (AZ-104)
-🛣️ Learning Path Summary
+<hr>
+
+<h2>🎓 Recommended Learning Path &amp; Certifications</h2>
+
+<h3>🟢 Beginner Level</h3>
+
+<p>
+Start with a foundational certification to understand cloud concepts and
+terminology.
+</p>
+
+<ul>
+    <li>AWS Certified Cloud Practitioner</li>
+    <li>Microsoft Azure Fundamentals (AZ-900)</li>
+</ul>
+
+<h3>🔵 Associate Level</h3>
+
+<p>
+Move to hands-on certifications that focus on designing and managing cloud
+infrastructure.
+</p>
+
+<ul>
+    <li>AWS Certified Solutions Architect – Associate</li>
+    <li>Microsoft Azure Administrator (AZ-104)</li>
+</ul>
+
+<hr>
+
+<h2>🛣️ Learning Path Summary</h2>
+
+<pre>
 Linux
    ↓
 Networking
    ↓
-Git & GitHub
+Git &amp; GitHub
    ↓
 Choose One Cloud Provider
    ↓
@@ -179,22 +298,31 @@ Kubernetes
    ↓
 CI/CD
    ↓
-Monitoring & Observability
+Monitoring &amp; Observability
    ↓
 Cloud Certifications
+</pre>
 
-🎯 Final Goal
-By completing this roadmap, you will gain practical knowledge in:
+<hr>
 
-✅ Linux Administration
-✅ Networking Fundamentals
-✅ Git & GitHub
-✅ Cloud Infrastructure
-✅ Infrastructure as Code (Terraform)
-✅ Automation with Python/Bash
-✅ Docker
-✅ Kubernetes
-✅ CI/CD Pipelines
-✅ Monitoring & Observability
-✅ Industry Certifications
-Happy Learning! 🚀
+<h2>🎯 Final Goal</h2>
+
+<p>By completing this roadmap, you will gain practical knowledge in:</p>
+
+<ul>
+    <li>✅ Linux Administration</li>
+    <li>✅ Networking Fundamentals</li>
+    <li>✅ Git &amp; GitHub</li>
+    <li>✅ Cloud Infrastructure</li>
+    <li>✅ Infrastructure as Code (Terraform)</li>
+    <li>✅ Automation with Python/Bash</li>
+    <li>✅ Docker</li>
+    <li>✅ Kubernetes</li>
+    <li>✅ CI/CD Pipelines</li>
+    <li>✅ Monitoring &amp; Observability</li>
+    <li>✅ Industry Certifications</li>
+</ul>
+
+<hr>
+
+<h3>🚀 Happy Learning!</h3>
