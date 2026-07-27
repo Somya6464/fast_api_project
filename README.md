@@ -42,6 +42,40 @@ you cannot securely connect, manage, or troubleshoot cloud resources.
 <p><strong>Topics to cover:</strong></p>
 
 <ul>
+    <li>Chapter 1: what is Networking </li>
+    <p>
+        Networking is a collection of devices connected with each others so they exchange data.
+        ex: 5 houses(computers) connected through roads(wired/wifi), so people(data) can send letters(data packets) 
+        If I want to see a youtube video then It pass through this process :-  Phone -> wifi -> Router -> IPs -> Internet -> Google servers
+    </p>
+    <p>
+        <h2>Why Do We Need Networking?</h2>
+        Without networking 
+        <ul>
+            <li>No Internet</li>
+            <li>No Netflix</li>
+            <li>No WhatsApp</li>
+            <li>No AWS</li>
+        </ul>
+        Everthing depends on networking today.
+        <h4>What Actually Travels?</h4>
+        <b>Everything becomes packets.</b>
+        ex: Sending courier (send many small boxes, but at the end they combined at the destination) packets work's like that.
+        <h2>Components of Network</h2>
+        <ul>
+            <li>Client: Requests data{Laptop, Mobile}</li>
+            <li>Server: Provides data {Google server, Netflix server}</li>
+            <li>Router: Connect different networks</li>
+            <li>Switch: Connect devices inside the same LAN {It contains only lan cable ports which directly connected through main Router}</li>
+            <li>Cable/WiFi: The Road</li>
+            <li>Internet: The worlds biggest network</li>
+            <li>ISP: Internet Service Provider {Airtel, Geo, Idea}</li>
+        </ul>
+        <h2>What is a Packet?</h2>
+        <p>It's a small piece of data that contains {source add. / destination add. / data||payload / control information}</p>
+        <h4> <b>The Internet is a network of networks.</b></h4>
+        
+    </p>
     <li>TCP/IP</li>
     <li>IP Addresses</li>
     <li>Ports</li>
