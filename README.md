@@ -85,6 +85,11 @@ you cannot securely connect, manage, or troubleshoot cloud resources.
     <li>Firewalls</li>
     <li>Routing</li>
 </ul>
+<h4> <b> Terminal Knowledge </b></h4>
+<B>Process Monitoring</B>
+<p>Process monitoring = checking what programs are running on a server and how much CPU/RAM/resources they are consuming.
+    Commands: ps (process status) / top(give live updates) / pgrep <processname>(helps to find PID) / kill <PID>(kill the process) / kill -9 <PID>(kill any process forcefully) / fg (bring jobs foreground) / bg (run stopped jobs in background)
+</p>
 
 <h3>🔄 Version Control (Git &amp; GitHub)</h3>
 
