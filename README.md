@@ -90,6 +90,105 @@ you cannot securely connect, manage, or troubleshoot cloud resources.
 <p>Process monitoring = checking what programs are running on a server and how much CPU/RAM/resources they are consuming.
     Commands: ps (process status) / top(give live updates) / pgrep <processname>(helps to find PID) / kill <PID>(kill the process) / kill -9 <PID>(kill any process forcefully) / fg (bring jobs foreground) / bg (run stopped jobs in background)
 </p>
+<br>
+<br>
+<br>
+
+<B>Performance Monitoring</B>
+<p>
+    Process Monitoring tells you what is running; Performance Monitoring tells you how healthy and capable the whole system is.
+    Think of it like checking the health of a car:
+For Server it's: 
+ ├── CPU
+ ├── RAM
+ ├── Disk
+ ├── Network
+ └── Processes
+
+Process Monitoring
+        ↓
+Individual processes
+
+Performance Monitoring
+        ↓
+Entire system
+<i> 4 things we mostly measure </i>
+CPU / RAM / DISK / NETWORK
+disk usage: df -h
+ex :- and use% is important for me.
+Filesystem   Size   Used   Avail   Use%
+/dev/sda1     100G    90G    10G    90%
+<br>
+<br>
+use these commands to find which usage that much disk space: 
+- du -sh *
+- du -sh /var/*
+</p>
+<br>
+<br>
+<B>Network Monitoring</B>
+<p>
+    You may want to know:
+    <ul>
+        <li>How much data is coming in?</li>
+        <li>How much is going out?</li>
+        <li>Are there network errors?</li>
+        <li>Is traffic unusually high?</li>
+    </ul>
+    <br>
+    use commands like: 
+    <ul>
+        <li>ss</li>
+        <li>ip</li>
+        <li>iftop</li>
+        <li>nload</li>
+        <li>vmstat: it provide details about (cpu,process,I/O,system activity)</li>
+        <li>iostat: it provide details about systems I/O </li>
+    </ul>
+    <br>
+    <br>
+    <i>performance monitoring is not about CPU</i>
+    ex:- anything looks good but user says it takes 10 sec. to load
+    <br>
+    Then in web application you might monitor:
+    - Request count
+    - Response time
+    - Error rate
+    - Database latency
+    - HTTP 5xx errors
+    <br>
+    <br>
+    <i> 4 Golden Rules</i>
+    <ul>
+        <li>Latency: How time api request takes to return</li>
+        <li>Traffic: How much demand the system has</li>
+        <li>Error: How many requests are failing</li>
+        <li>Saturation:  resources apni max limit ko reach karne ke kitne duur hai, if they reach they become saturated</li>
+    </ul>
+            PERFORMANCE MONITORING
+                      │
+        ┌─────────────┼─────────────┐
+        ↓             ↓             ↓
+       CPU           RAM           DISK
+        │             │             │
+   Processing      Memory       Storage
+        │             │             │
+        └─────────────┼─────────────┘
+                      ↓
+                   NETWORK
+                      │
+                      ↓
+                APPLICATION
+                      │
+          ┌───────────┼───────────┐
+          ↓           ↓           ↓
+       Latency      Errors      Traffic
+
+
+
+</p>
+
+
 
 <h3>🔄 Version Control (Git &amp; GitHub)</h3>
 
