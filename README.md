@@ -238,6 +238,11 @@ Does DNS point the domain where I expect?
     
 </p>
 
+<h4><b>Text Manipulation</b></h4>
+<p>
+    Text manipulation involves using command-line tools to search, filter, transform, and extract data from text files or streams. These utilities, such as `grep`, `sed`, `awk`, and `cut`, allow you to process large amounts of output, reformat configuration files, or parse logs directly within the terminal.
+</p>
+
 
 
 <h3>🔄 Version Control (Git &amp; GitHub)</h3>
