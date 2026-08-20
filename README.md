@@ -165,7 +165,7 @@ use these commands to find which usage that much disk space:
         <li>Error: How many requests are failing</li>
         <li>Saturation:  resources apni max limit ko reach karne ke kitne duur hai, if they reach they become saturated</li>
     </ul>
-            PERFORMANCE MONITORING
+       ```     PERFORMANCE MONITORING
                       │
         ┌─────────────┼─────────────┐
         ↓             ↓             ↓
@@ -182,10 +182,60 @@ use these commands to find which usage that much disk space:
                       │
           ┌───────────┼───────────┐
           ↓           ↓           ↓
-       Latency      Errors      Traffic
+       Latency      Errors      Traffic 
+       ```
 
+</p>
+<h4><b>Networking Tools</b></h4>
+<p>
+    <i>
+        Networking tools are command-line utilities used to monitor, diagnose, and troubleshoot network connections between computers and servers. These tools allow you to verify connectivity via ping, inspect active network sockets, trace the route of data packets, and analyze traffic passing through specific network interfaces.
+    </i>
+    <br>
+    <br>
+    ```
+    Your Server
+    │
+    ├── Who am I?          → hostname / ip (ip a, ip route)
+    ├── Where am I?        → ip addr
+    ├── Where can I go?    → ping (ping google.com)
+    ├── What route do I use? → traceroute (see the network path)
+    ├── Can I connect?     → curl (curl "site link/ api link")
+    ├── Which ports are open? → ss (ss -tuln)
+    |-- ```
+        -t → TCP
+        -u → UDP
+        -l → listening
+        -n → don't resolve names; show numbers
+        you see :
+        0.0.0.0:22 (22-ssh) / 0.0.0.0:80 (80-HTTP) / 0.0.0.0:443 (443- HTTPS)
+    |-- ```
+    |-- nslookup (find ki aapka domain kis IP per running hai.)
+    |-- wget "link" (used to download files from URLs)
+    |-- hostname (check machine hostname)
+    └── What's this domain's IP? → nslookup / dig
 
+ping
+ ↓
+Can I reach the machine?
 
+ss
+ ↓
+Is something listening on the port?
+
+nc
+ ↓
+Can I connect to that port?
+
+curl
+ ↓
+Does the HTTP/API service actually respond?
+
+dig
+ ↓
+Does DNS point the domain where I expect?
+    ```
+    
 </p>
 
 
