@@ -21,3 +21,14 @@ python -m alembic upgrade head
 7. Got issue to send OTP verification email, due to port connectionTimeOut 
 solution: use resend -> create account and change mail send working as per resend. But for free use may be it won't work for free,
 but when you have domain purchased then you can do this easyly.In my case I don't have any purchased domain.
+
+8. HOW WE CONTAINARIZE OUR FAST API APP + POSTGREs DB USING DOCKER.
+
+- create and file named `Dockerfile` 
+- Then create a `composed.yml` file for DB informations
+- Then verify ki requirements.txt file updated hai kya
+- DB connection wali file code me hai kya
+- Run docker compose from project root with this command : docker-compose up --build
+- Now it start's db container and make your FastApi app image. connect them with `fastapi-net`.
+- Test Link: `http://localhost:8000/docs` / db link : `http://localhost:5432` 
+- user: `postgres`/ pass: `password` / DB: `fastapi_db`
