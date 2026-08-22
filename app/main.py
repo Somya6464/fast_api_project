@@ -289,7 +289,7 @@ def read_file(file_name: str):
 # Implementation of CORS #
 from fastapi.middleware.cors import CORSMiddleware
 
-origins = os.getenv("origins")
+origins = os.getenv("origins", "").split(",")  # Get origins from environment variable
 
 app.add_middleware(
     CORSMiddleware,
