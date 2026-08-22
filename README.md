@@ -258,6 +258,15 @@ projects.
     <li>Pull Requests</li>
     <li>GitHub Repositories</li>
     <li>Collaboration Workflows</li>
+    <li>git bisect: used to find the buggy commit or checkout from many commits.
+        commands:
+        - git bisect start
+        - git bisect bad main (specify the issue branch)
+        - git bisect good v1.2.0 (branch which work's)
+        - git bisect bad (test and mark the branch bed if bug is there)
+        - git bisect good (test and mark the branch good if bug is there)
+        - git bisect reset (after commit find then cleanup and return the repo to it's original state)
+    </li>
 </ul>
 
 <hr>
