@@ -57,7 +57,7 @@
   <li>Firstly create an env to start the project work.</li>
   <li>By entering all package names which are used, run this command: <code>pip install -r requirements.txt</code> (this will install all the mentioned packages).</li>
   <li>Then create some essential files, initialize them inside <code>main.py</code>.</li>
-  <li>For running the server use: <code>uvicorn main:app --reload</code></li>
+  <li>For running the server use: <code>uvicorn main:app --reload / python -m uvicorn app.main:app --reload</code></li>
   <li>Sometimes we use <code>ipython</code> command for:
     <pre><code>In [1]: import db, models
 In [2]: db.create_table()</code></pre>

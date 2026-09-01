@@ -123,7 +123,7 @@ class BookApiService {
       log("api endpoint: ${baseUrl}books/get_books");
       final response = await _dio.get(
         '${baseUrl}books/get_books',
-        options: await _authorizedOptions(),
+        // options: await _authorizedOptions(),
       );
       log("response: ${response.data}");
       if (response.statusCode == 200) {
@@ -179,7 +179,7 @@ class BookApiService {
       log("api endpoint: ${baseUrl}books/create_book");
       final response = await _dio.post(
         '${baseUrl}books/create_book',
-        options: await _authorizedOptions(),
+        // options: await _authorizedOptions(),
         data: {
           'title': book.title,
           'description': book.description,

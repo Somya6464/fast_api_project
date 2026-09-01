@@ -26,8 +26,6 @@ from app.core.config import settings
 # from app.core.redis import redis_client
 from app.schemas import books_schema
 from app.services import services
-from app.models.user_model import UserModel
-from app.dependencies.auth_dependency import get_current_user
 import uvicorn
 
 # Create tables
@@ -40,7 +38,7 @@ if __name__ == "__main__":
     port = int(os.environ.get(default="8000", key="PORT"))
 
     uvicorn.run(
-        "main:app",  # or "app.main:app" depending on your structure
+        "app.main:app",  # or "app.main:app" depending on your structure
         host="0.0.0.0",  # ⚠️ CRITICAL: Must be 0.0.0.0, NOT 127.0.0.1 or localhost
         port=port,  # ⚠️ CRITICAL: Must use Render's PORT variable
         reload=False,  # Never use reload=True in production
@@ -72,7 +70,6 @@ async def user_not_found_exception_handler(
 @app.get("/books/get_books", response_model=list[books_schema.Book])
 async def get_books(
     db: Session = Depends(get_db),
-    current_user: UserModel = Depends(get_current_user),
 ):
     await asyncio.sleep(2)
     return services.get_book(db)
@@ -82,7 +79,6 @@ async def get_books(
 def get_book_by_id(
     book_id: int,
     db: Session = Depends(get_db),
-    current_user: UserModel = Depends(get_current_user),
 ):
     db_book = services.get_book_by_id(db, book_id)
     if db_book is None:
@@ -99,7 +95,7 @@ def get_book_by_id(
 def create_book(
     book: books_schema.BookCreate,
     db: Session = Depends(get_db),
-    current_user: UserModel = Depends(get_current_user),
+    # current_user: UserModel = Depends(get_current_user),
 ):
     return services.create_book(db, book)
 
@@ -109,7 +105,7 @@ def update_book(
     book_id: int,
     book: books_schema.BookCreate,
     db: Session = Depends(get_db),
-    current_user: UserModel = Depends(get_current_user),
+    # current_user: UserModel = Depends(get_current_user),
 ):
     db_book = services.update_book(db, book_id, book)
     if db_book is None:
@@ -121,7 +117,7 @@ def update_book(
 def delete_book(
     book_id: int,
     db: Session = Depends(get_db),
-    current_user: UserModel = Depends(get_current_user),
+    # current_user: UserModel = Depends(get_current_user),
 ):
     db_book = services.delete_book(db, book_id)
     if db_book is None:
