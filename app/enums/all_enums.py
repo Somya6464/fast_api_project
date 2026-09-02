@@ -1,5 +1,5 @@
-from enum import StrEnum
+from enum import Enum
 
-class UserRole(StrEnum):
+class UserRole(Enum):
     AUTHOR = "author"
     USER = "user"

@@ -27,6 +27,16 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  @override
+  void initState() {
+    _checkUnsecuredApi();
+    super.initState();
+  }
+
+  Future<void> _checkUnsecuredApi() async {
+    await _apiService.callUnprotectedApi();
+  }
+
   Future<void> _handleLogin() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -97,7 +107,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
                   ),
                   const SizedBox(height: 40),
-
                   // ── Username ──
                   TextFormField(
                     controller: _usernameController,
@@ -119,7 +128,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   const SizedBox(height: 16),
-
                   // ── Password ──
                   TextFormField(
                     controller: _passwordController,
@@ -156,7 +164,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   const SizedBox(height: 28),
-
                   // ── Login Button ──
                   SizedBox(
                     height: 52,
@@ -188,8 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                     ),
                   ),
-
-                       SizedBox(height: 16),
+                  SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

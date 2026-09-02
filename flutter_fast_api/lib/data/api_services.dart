@@ -1,28 +1,29 @@
+import 'dart:convert';
 import 'dart:developer';
-
-import 'package:dio/dio.dart';
 import 'package:flutter_fast_api/data/sharedpreference_helper.dart';
 import 'package:flutter_fast_api/model/book_list_model.dart';
 import 'package:flutter_fast_api/model/login_response.dart';
+import 'package:http/http.dart' as http;
 
 class BookApiService {
-  final String baseUrl = "https://fast-api-project-z7yg.onrender.com/";
+  // final String baseUrl = "https://fast-api-project-z7yg.onrender.com/";
   // final String baseUrl = "http://127.0.0.1:8000/";
-  final _dio = Dio();
+  final String baseUrl = "http://10.0.2.2:8000/";
 
   Future<AuthResponse> login(String username, String password) async {
     try {
       log("api endpoint: ${baseUrl}auth/login");
 
-      final response = await _dio.post(
-        '${baseUrl}auth/login',
-        options: Options(contentType: Headers.jsonContentType),
-        data: {'email': username, 'password': password},
+      final response = await http.post(
+        Uri.parse('${baseUrl}auth/login'),
+        body: {'email': username, 'password': password},
       );
-      log("response: ${response.data}");
+      log("response: ${response.body}");
 
       if (response.statusCode == 200) {
-        final authResponseModel = AuthResponse.fromJson(response.data);
+        final authResponseModel = AuthResponse.fromJson(
+          jsonDecode(response.body),
+        );
         await LocalStorageHelper.saveToken(
           authResponseModel.accessToken,
           authResponseModel.tokenType,
@@ -31,11 +32,8 @@ class BookApiService {
         return authResponseModel;
       }
       throw Exception('Login failed: ${response.statusCode}');
-    } on DioException catch (e) {
-      if (e.response?.statusCode == 401) {
-        throw Exception('Invalid username or password');
-      }
-      throw Exception('Login error: ${e.message}');
+    } catch (e) {
+      throw Exception('Login error: ${e.toString()}');
     }
   }
 
@@ -48,10 +46,10 @@ class BookApiService {
     try {
       log("api endpoint: ${baseUrl}auth/signup");
 
-      final response = await _dio.post(
-        '${baseUrl}auth/signup',
-        options: Options(contentType: Headers.jsonContentType),
-        data: {
+      final response = await http.post(
+        Uri.parse('${baseUrl}auth/signup'),
+
+        body: {
           "username": username,
           "email": email,
           "password": password,
@@ -59,23 +57,15 @@ class BookApiService {
         },
       );
 
-      log("response: ${response.data}");
+      log("response: ${response.body}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         return;
       }
 
-      throw Exception(response.data["message"] ?? "Signup failed");
-    } on DioException catch (e) {
-      if (e.response != null) {
-        final data = e.response!.data;
-
-        if (data is Map<String, dynamic>) {
-          throw Exception(data["detail"] ?? data["message"] ?? "Signup failed");
-        }
-      }
-
-      throw Exception("Signup error: ${e.message}");
+      throw Exception("Signup failed");
+    } catch (e) {
+      throw Exception("Signup error: ${e.toString()}");
     }
   }
 
@@ -84,26 +74,29 @@ class BookApiService {
     required String otp,
   }) async {
     try {
-      final response = await _dio.post(
-        '${baseUrl}auth/verify-otp',
-        data: {"email": email, "otp": otp},
+      final response = await http.post(
+        Uri.parse('${baseUrl}auth/verify-otp'),
+        body: {"email": email, "otp": otp},
       );
 
-      return AuthResponse.fromJson(response.data);
-    } on DioException catch (e) {
-      throw Exception(e.response?.data["detail"] ?? "OTP verification failed");
+      return AuthResponse.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      throw Exception("OTP verification failed");
     }
   }
 
   Future<void> resendOtp(String email) async {
     try {
-      await _dio.post('${baseUrl}auth/resend-otp', data: {"email": email});
-    } on DioException catch (e) {
-      throw Exception(e.response?.data["detail"] ?? "Unable to resend OTP");
+      await http.post(
+        Uri.parse('${baseUrl}auth/resend-otp'),
+        body: {"email": email},
+      );
+    } catch (e) {
+      throw Exception("Unable to resend OTP");
     }
   }
 
-  Future<Options> _authorizedOptions() async {
+  /* Future<Options> _authorizedOptions() async {
     final token = await LocalStorageHelper.getToken();
 
     if (token == null || token.isEmpty) {
@@ -116,86 +109,110 @@ class BookApiService {
         "Content-Type": Headers.jsonContentType,
       },
     );
-  }
+  } */
 
   Future<List<BookListResponse>> getBooks() async {
     try {
       log("api endpoint: ${baseUrl}books/get_books");
-      final response = await _dio.get(
-        '${baseUrl}books/get_books',
-        // options: await _authorizedOptions(),
-      );
-      log("response: ${response.data}");
+      final response = await http.get(Uri.parse("${baseUrl}books/get_books"));
+      log("response: ${response.body}");
       if (response.statusCode == 200) {
-        final List<dynamic> data = response.data;
+        final List<dynamic> data = jsonDecode(response.body);
         return data.map((json) => BookListResponse.fromJson(json)).toList();
       }
       throw Exception('Failed to load books: ${response.statusCode}');
-    } on DioException catch (e) {
-      throw Exception('Network error: ${e.message}');
+    } catch (e) {
+      throw Exception('Network error: ${e.toString()}');
     }
   }
 
   Future<bool> deleteBook(int bookId) async {
     try {
       log("api endpoint: ${baseUrl}books/delete_book/$bookId");
-      final response = await _dio.delete(
-        '${baseUrl}books/delete_book/$bookId',
-        options: await _authorizedOptions(),
+      final response = await http.delete(
+        Uri.parse('${baseUrl}books/delete_book/$bookId'),
+        // options: await _authorizedOptions(),
       );
-      log("response: ${response.data}");
+      log("response: ${response.body}");
       return response.statusCode == 200 || response.statusCode == 204;
-    } on DioException catch (e) {
-      throw Exception('Failed to delete book: ${e.message}');
+    } catch (e) {
+      throw Exception('Failed to delete book: ${e.toString()}');
     }
   }
 
   Future<BookListResponse> updateBook(int bookId, BookListResponse book) async {
     try {
       log("api endpoint: ${baseUrl}books/update_book/$bookId");
-      final response = await _dio.put(
-        '${baseUrl}books/update_book/$bookId',
-        options: await _authorizedOptions(),
-        data: {
+      log(
+        "request body: ${jsonEncode({'title': book.title, 'description': book.description, 'author': book.author, 'year': book.year})}",
+      );
+      final response = await http.put(
+        Uri.parse('${baseUrl}books/update_book/$bookId'),
+        headers: {"Content-Type": "application/json"},
+        // options: await _authorizedOptions(),
+        body: jsonEncode({
           'title': book.title,
           'description': book.description,
+          'author_id': book.authorId,
           'author': book.author,
           'year': book.year,
-        },
+        }),
       );
-      log("response: ${response.data}");
+      log("response: ${response.body}");
 
       if (response.statusCode == 200) {
-        return BookListResponse.fromJson(response.data);
+        return BookListResponse.fromJson(jsonDecode(response.body));
       }
       throw Exception('Failed to update book');
-    } on DioException catch (e) {
-      throw Exception('Failed to update book: ${e.message}');
+    } catch (e) {
+      throw Exception('Failed to update book: ${e.toString()}');
     }
   }
 
   Future<BookListResponse> createBook(BookListResponse book) async {
     try {
       log("api endpoint: ${baseUrl}books/create_book");
-      final response = await _dio.post(
-        '${baseUrl}books/create_book',
+      log(
+        "request body: ${jsonEncode({'title': book.title, 'description': book.description, 'author_id': book.authorId, 'author': book.author, 'year': book.year})}",
+      );
+      final response = await http.post(
+        Uri.parse('${baseUrl}books/create_book'),
+        headers: {"Content-Type": "application/json"},
         // options: await _authorizedOptions(),
-        data: {
+        body: jsonEncode({
           'title': book.title,
           'description': book.description,
           'author_id': book.authorId,
           'author': book.author,
           'year': book.year,
-        },
+        }),
       );
-      log("response: ${response.data}");
+      log("response: ${response.body}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return BookListResponse.fromJson(response.data);
+        return BookListResponse.fromJson(jsonDecode(response.body));
       }
       throw Exception('Failed to create book');
-    } on DioException catch (e) {
-      throw Exception('Failed to create book: ${e.message}');
+    } catch (e) {
+      throw Exception('Failed to create book: ${e.toString()}');
+    }
+  }
+
+  Future<void> callUnprotectedApi() async {
+    try {
+      log("api endpoint: http://jsonplaceholder.typicode.com/posts");
+      final response = await http.get(
+        Uri.parse('http://jsonplaceholder.typicode.com/posts'),
+        // options: await _authorizedOptions(),
+      );
+      log("response: ${response.body}");
+      // if (response.statusCode == 200) {
+      //   final List<dynamic> data = response.data;
+      //   return data.map((json) => BookListResponse.fromJson(json)).toList();
+      // }
+      // throw Exception('Failed to load books: ${response.statusCode}');
+    } catch (e) {
+      throw Exception('Network error: ${e.toString()}');
     }
   }
 }
